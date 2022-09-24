@@ -21,6 +21,8 @@ public class ModHandler
     public async Task<ModDtoGet> AddMod(ModDto modDto)
     {
         var mod = _mapper.Map<ModDto, Mod>(modDto);
+        //TODO: replace with authenticated user
+        mod.UserId = _context.Users.First().Id;
         await _context.Mods.AddAsync(mod);
         await _context.SaveChangesAsync();
         var modToReturn = _mapper.Map<Mod, ModDtoGet>(mod);
@@ -32,6 +34,13 @@ public class ModHandler
         var mod = await _context.Mods.FirstAsync(x => x.Id == id);
         var modDto = _mapper.Map<Mod, ModDtoGet>(mod);
         return modDto;
+    }
+    
+    public async Task<IEnumerable<ModDtoGet>> GetAllMods()
+    {
+        var mods = await _context.Mods.Where(x => x.ModStatus != ModStatus.Deleted).ToListAsync();
+        var modsDto = _mapper.Map<IEnumerable<Mod>, IEnumerable<ModDtoGet>>(mods);
+        return modsDto;
     }
     
     public async Task UpdateMod(int id, ModDto modDto)

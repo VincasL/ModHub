@@ -16,4 +16,10 @@ public class Mod : BaseModel
     [ForeignKey("GameId")]
     public virtual Game Game { get; set; }
     public int GameId { get; set; }
+    
+    [ForeignKey("UserId")]
+    public virtual User User { get; set; }
+    public int UserId { get; set; }
+    public ICollection<Comment> Comments { get; set; }
+    public ICollection<ModRating> ModRatings { get; set; }
 }

@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ModHub.DTO;
-using ModHub.Enums;
 using ModHub.Models;
 
 namespace ModHub.Handlers;
@@ -25,6 +23,13 @@ public class GameHandler
         await _context.SaveChangesAsync();
         var gameToReturn = _mapper.Map<Game, GameDtoGet>(game);
         return gameToReturn;
+    }
+    
+    public async Task<IEnumerable<GameDtoGet>> GetAllGames()
+    {
+        var games = await _context.Games.Where(x => !x.IsDeleted).ToListAsync();
+        var gamesDto = _mapper.Map<IEnumerable<Game>, IEnumerable<GameDtoGet>>(games);
+        return gamesDto;
     }
     
     public async Task<GameDtoGet> GetGame(int id)
@@ -50,9 +55,19 @@ public class GameHandler
         _context.Games.Remove(game);
         await _context.SaveChangesAsync();
     }
+    
+    public async Task SoftDeleteGame(int id)
+    {
+        var game = await _context.Games.FirstAsync( x=> x.Id == id);
+        _context.Entry(game).State = EntityState.Modified;
+        game.IsDeleted = true;
+        await _context.SaveChangesAsync();
+    }
 
     public bool GameExists(int id)
     {
-        return _context.Games.Any(x => x.Id == id);
+        return _context.Games.Any(x => x.Id == id && !x.IsDeleted);
     }
+
+
 }

@@ -11,4 +11,5 @@ public class ModDtoGet
     public string? ImageKey {get; set;}
     public ModStatus ModStatus {get; set;}
     public string Description {get; set;}
+    public UserDtoGet User { get; set; }
 }

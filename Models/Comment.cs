@@ -7,8 +7,11 @@ public class Comment : BaseModel
     public string Text { get; set; }
     
     [ForeignKey("UserId")]
-    public User User { get; set; }
+    public virtual User User { get; set; }
+    public int UserId { get; set; }
     
     [ForeignKey("ModId")]
-    public Mod Mod { get; set; }
+    public virtual Mod Mod { get; set; }
+    public int ModId { get; set; }
+    public DateTime DateStamp { get; set; } = DateTime.Now;
 }

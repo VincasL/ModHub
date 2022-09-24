@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ModHub.DTO;
 using ModHub.Handlers;
-using ModHub.Models;
 
 namespace ModHub.Controllers;
 
@@ -10,12 +9,23 @@ namespace ModHub.Controllers;
 [Route("[controller]")]
 public class ModController : ControllerBase
 {
-    private ModHandler _handler;
-
-    public ModController(ModHandler handler)
+    private readonly ModHandler _handler;
+    private readonly CommentHandler _commentHandler;
+    
+    public ModController(ModHandler handler, CommentHandler commentHandler)
     {
         _handler = handler;
+        _commentHandler = commentHandler;
     }
+    
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GameDtoGet))]
+    public async Task<IEnumerable<ModDtoGet>> GetAllMods()
+    {
+        var result = await _handler.GetAllMods();
+        return result;
+    }
+
     
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModDtoGet))]
@@ -30,6 +40,21 @@ public class ModController : ControllerBase
         var result = await _handler.GetMod(id);
 
         return result;
+    }
+    
+    [HttpGet("{id}/comments")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CommentDtoGet>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> GetCommentsByModId(int id)
+    {
+        if (!_handler.ModExists(id))
+        {
+            return NotFound();
+        }
+        
+        var result = await _commentHandler.GetCommentsByModId(id);
+
+        return Ok(result);
     }
     
     [HttpPost]
@@ -62,8 +87,7 @@ public class ModController : ControllerBase
             return NotFound();
         }
         
-        await _handler.DeleteMod(id);
+        await _handler.SoftDeleteMod(id);
         return Ok();
     }
-
 }

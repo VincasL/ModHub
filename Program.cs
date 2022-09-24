@@ -8,9 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddTransient<ModHandler>();
 builder.Services.AddTransient<GameHandler>();
-
+builder.Services.AddTransient<CommentHandler>();
+builder.Services.AddTransient<UserHandler>();
+builder.Services.AddTransient<RatingHandler>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));

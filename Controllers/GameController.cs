@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ModHub.DTO;
 using ModHub.Handlers;
-using ModHub.Models;
 
 namespace ModHub.Controllers;
 
@@ -10,11 +9,19 @@ namespace ModHub.Controllers;
 [Route("[controller]")]
 public class GameController : ControllerBase
 {
-    private GameHandler _handler;
+    private readonly GameHandler _handler;
 
     public GameController(GameHandler handler)
     {
         _handler = handler;
+    }
+    
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GameDtoGet))]
+    public async Task<IEnumerable<GameDtoGet>> GetAllGames()
+    {
+        var result = await _handler.GetAllGames();
+        return result;
     }
     
     [HttpGet("{id}")]
@@ -62,7 +69,7 @@ public class GameController : ControllerBase
             return NotFound();
         }
         
-        await _handler.DeleteGame(id);
+        await _handler.SoftDeleteGame(id);
         return Ok();
     }
 
