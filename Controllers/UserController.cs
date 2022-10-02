@@ -9,9 +9,9 @@ namespace ModHub.Controllers;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly UserHandler _handler;
+    private readonly UsersHandler _handler;
 
-    public UserController(UserHandler handler)
+    public UserController(UsersHandler handler)
     {
         _handler = handler;
     }

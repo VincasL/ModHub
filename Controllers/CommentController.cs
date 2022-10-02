@@ -9,9 +9,9 @@ namespace ModHub.Controllers;
 [Route("[controller]")]
 public class CommentController : ControllerBase
 {
-    private readonly CommentHandler _handler;
+    private readonly CommentsHandler _handler;
 
-    public CommentController(CommentHandler handler)
+    public CommentController(CommentsHandler handler)
     {
         _handler = handler;
     }

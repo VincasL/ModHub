@@ -9,11 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddTransient<ModHandler>();
-builder.Services.AddTransient<GameHandler>();
-builder.Services.AddTransient<CommentHandler>();
-builder.Services.AddTransient<UserHandler>();
-builder.Services.AddTransient<RatingHandler>();
+builder.Services.AddTransient<ModsHandler>();
+builder.Services.AddTransient<GamesHandler>();
+builder.Services.AddTransient<CommentsHandler>();
+builder.Services.AddTransient<UsersHandler>();
+builder.Services.AddTransient<RatingsHandler>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
@@ -39,7 +39,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

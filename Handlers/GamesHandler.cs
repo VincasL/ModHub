@@ -6,12 +6,12 @@ using ModHub.Models;
 
 namespace ModHub.Handlers;
 
-public class GameHandler
+public class GamesHandler
 {
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public GameHandler(ApplicationDbContext context, IMapper mapper)
+    public GamesHandler(ApplicationDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

@@ -5,12 +5,12 @@ using ModHub.Models;
 
 namespace ModHub.Handlers;
 
-public class UserHandler
+public class UsersHandler
 {
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public UserHandler(ApplicationDbContext context, IMapper mapper)
+    public UsersHandler(ApplicationDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

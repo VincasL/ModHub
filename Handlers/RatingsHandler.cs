@@ -6,12 +6,12 @@ using ModHub.Models;
 
 namespace ModHub.Handlers;
 
-public class RatingHandler
+public class RatingsHandler
 {
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public RatingHandler(ApplicationDbContext context, IMapper mapper)
+    public RatingsHandler(ApplicationDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

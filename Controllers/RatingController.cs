@@ -9,13 +9,13 @@ namespace ModHub.Controllers;
 [Route("[controller]")]
 public class RatingController : ControllerBase
 {
-    private readonly RatingHandler _handler;
-    private ModHandler _modHandler;
+    private readonly RatingsHandler _handler;
+    private ModsHandler _modsHandler;
 
-    public RatingController(RatingHandler handler, ModHandler modHandler)
+    public RatingController(RatingsHandler handler, ModsHandler modsHandler)
     {
         _handler = handler;
-        _modHandler = modHandler;
+        _modsHandler = modsHandler;
     }
 
     [HttpGet("{id}")]

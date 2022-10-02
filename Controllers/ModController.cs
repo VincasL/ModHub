@@ -9,20 +9,20 @@ namespace ModHub.Controllers;
 [Route("[controller]")]
 public class ModController : ControllerBase
 {
-    private readonly ModHandler _modHandler;
-    private readonly CommentHandler _commentHandler;
+    private readonly ModsHandler _modsHandler;
+    private readonly CommentsHandler _commentsHandler;
     
-    public ModController(ModHandler modHandler, CommentHandler commentHandler)
+    public ModController(ModsHandler modsHandler, CommentsHandler commentsHandler)
     {
-        _modHandler = modHandler;
-        _commentHandler = commentHandler;
+        _modsHandler = modsHandler;
+        _commentsHandler = commentsHandler;
     }
     
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ModDtoGet>))]
     public async Task<IEnumerable<ModDtoGet>> GetAllMods()
     {
-        var result = await _modHandler.GetAllMods();
+        var result = await _modsHandler.GetAllMods();
         return result;
     }
 
@@ -32,12 +32,12 @@ public class ModController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ModDtoGet>> GetMod(int id)
     {
-        if (!_modHandler.ModExists(id))
+        if (!_modsHandler.ModExists(id))
         {
             return NotFound();
         }
         
-        var result = await _modHandler.GetMod(id);
+        var result = await _modsHandler.GetMod(id);
 
         return result;
     }
@@ -47,12 +47,12 @@ public class ModController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetCommentsByModId(int id)
     {
-        if (!_modHandler.ModExists(id))
+        if (!_modsHandler.ModExists(id))
         {
             return NotFound();
         }
         
-        var result = await _commentHandler.GetCommentsByModId(id);
+        var result = await _commentsHandler.GetCommentsByModId(id);
 
         return Ok(result);
     }
@@ -62,7 +62,7 @@ public class ModController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ModDtoGet>> PostMod([FromBody] ModDto modDto)
     {
-        var result = await _modHandler.AddMod(modDto);
+        var result = await _modsHandler.AddMod(modDto);
         return CreatedAtAction(nameof(GetMod), new { id = result.Id }, result);
     }
 
@@ -72,12 +72,12 @@ public class ModController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> PutMod(int id, ModDto modDto)
     {
-        if (!_modHandler.ModExists(id))
+        if (!_modsHandler.ModExists(id))
         {
             return NotFound();
         }
         
-        await _modHandler.UpdateMod(id, modDto);
+        await _modsHandler.UpdateMod(id, modDto);
         return Ok();
     }
 
@@ -86,12 +86,12 @@ public class ModController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMod(int id)
     {
-        if (!_modHandler.ModExists(id))
+        if (!_modsHandler.ModExists(id))
         {
             return NotFound();
         }
         
-        await _modHandler.SoftDeleteMod(id);
+        await _modsHandler.SoftDeleteMod(id);
         return Ok();
     }
 }

@@ -7,14 +7,12 @@ using ModHub.Models;
 
 namespace ModHub.Handlers;
 
-public class ModHandler
+public class ModsHandler
 {
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
     
-    const int LoggedInUserId = 2;
-
-    public ModHandler(ApplicationDbContext context, IMapper mapper)
+    public ModsHandler(ApplicationDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;

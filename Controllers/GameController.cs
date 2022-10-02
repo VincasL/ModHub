@@ -9,20 +9,20 @@ namespace ModHub.Controllers;
 [Route("[controller]")]
 public class GameController : ControllerBase
 {
-    private readonly GameHandler _gameHandler;
-    private readonly ModHandler _modHandler;
+    private readonly GamesHandler _gamesHandler;
+    private readonly ModsHandler _modsHandler;
 
-    public GameController(GameHandler gameHandler, ModHandler modHandler)
+    public GameController(GamesHandler gamesHandler, ModsHandler modsHandler)
     {
-        _gameHandler = gameHandler;
-        _modHandler = modHandler;
+        _gamesHandler = gamesHandler;
+        _modsHandler = modsHandler;
     }
     
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GameDtoGet>))]
     public async Task<IEnumerable<GameDtoGet>> GetAllGames()
     {
-        var result = await _gameHandler.GetAllGames();
+        var result = await _gamesHandler.GetAllGames();
         return result;
     }
     
@@ -31,12 +31,12 @@ public class GameController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GameDtoGet>> GetGame(int id)
     {
-        if (!_gameHandler.GameExists(id))
+        if (!_gamesHandler.GameExists(id))
         {
             return NotFound();
         }
         
-        var result = await _gameHandler.GetGame(id);
+        var result = await _gamesHandler.GetGame(id);
 
         return Ok(result);
     }
@@ -46,12 +46,12 @@ public class GameController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetGameMods(int id)
     {
-        if (!_gameHandler.GameExists(id))
+        if (!_gamesHandler.GameExists(id))
         {
             return NotFound();
         }
         
-        var result = await _modHandler.GetModsByGameId(id);
+        var result = await _modsHandler.GetModsByGameId(id);
 
         return Ok(result);
     }
@@ -61,7 +61,7 @@ public class GameController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<GameDtoGet>> PostGame([FromBody] GameDto gameDto)
     {
-        var result = await _gameHandler.AddGame(gameDto);
+        var result = await _gamesHandler.AddGame(gameDto);
         return CreatedAtAction(nameof(GetGame), new { id = result.Id }, result);
     }
 
@@ -71,12 +71,12 @@ public class GameController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> PutGame(int id, GameDto gameDto)
     {
-        if (!_gameHandler.GameExists(id))
+        if (!_gamesHandler.GameExists(id))
         {
             return NotFound();
         }
         
-        await _gameHandler.UpdateGame(id, gameDto);
+        await _gamesHandler.UpdateGame(id, gameDto);
         return Ok();
     }
     
@@ -85,12 +85,12 @@ public class GameController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteGame(int id)
     {
-        if (!_gameHandler.GameExists(id))
+        if (!_gamesHandler.GameExists(id))
         {
             return NotFound();
         }
         
-        await _gameHandler.SoftDeleteGame(id);
+        await _gamesHandler.SoftDeleteGame(id);
         return Ok();
     }
 

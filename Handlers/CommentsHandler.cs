@@ -6,12 +6,12 @@ using ModHub.Models;
 
 namespace ModHub.Handlers;
 
-public class CommentHandler
+public class CommentsHandler
 {
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
 
-    public CommentHandler(ApplicationDbContext context, IMapper mapper)
+    public CommentsHandler(ApplicationDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
