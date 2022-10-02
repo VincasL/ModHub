@@ -8,7 +8,6 @@ public class Mod : BaseModel
     public int TotalDownloads { get; set; }
     public string? FileKey { get; set; }
     public string? DownloadLink { get; set; }
-    public string? ImageKey { get; set; }
     public ModStatus ModStatus { get; set; } = ModStatus.WaitingForApproval;
     public string Description { get; set; }
     public string Name { get; set; }
@@ -20,6 +19,14 @@ public class Mod : BaseModel
     [ForeignKey("UserId")]
     public virtual User User { get; set; }
     public int UserId { get; set; }
+    
+    [ForeignKey("RatingId")]
+    public virtual double Rating { get; set; }
+    public int? RatingId { get; set; }
+    
     public ICollection<Comment> Comments { get; set; }
     public ICollection<ModRating> ModRatings { get; set; }
+
+    public string? ImageUrl { get; set; } =
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-1TdKSOZKyiSG-APZM5nO9-p5clXCmeUcNQ&usqp=CAU";
 }

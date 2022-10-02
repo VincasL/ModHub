@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ModHub.DTO;
 using ModHub.Models;
@@ -68,6 +69,4 @@ public class GameHandler
     {
         return _context.Games.Any(x => x.Id == id && !x.IsDeleted);
     }
-
-
 }

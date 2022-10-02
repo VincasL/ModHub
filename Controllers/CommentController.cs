@@ -10,22 +10,12 @@ namespace ModHub.Controllers;
 public class CommentController : ControllerBase
 {
     private readonly CommentHandler _handler;
-    private ModHandler _modHandler;
 
-    public CommentController(CommentHandler handler, ModHandler modHandler)
+    public CommentController(CommentHandler handler)
     {
         _handler = handler;
-        _modHandler = modHandler;
     }
     
-    [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GameDtoGet))]
-    public async Task<IEnumerable<CommentDtoGet>> GetAllComments()
-    {
-        var result = await _handler.GetAllComments();
-        return result;
-    }
-
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CommentDtoGet))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -41,8 +31,16 @@ public class CommentController : ControllerBase
         return result;
     }
     
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CommentDtoGet>))]
+    public async Task<ActionResult<CommentDtoGet>> GetAllComments()
+    {
+        var result = await _handler.GetAllComments();
+
+        return Ok(result);
+    }
+    
     [HttpPost]
-    [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<CommentDtoGet>> PostComment([FromBody] CommentDtoPost commentDtoPost)
@@ -52,6 +50,9 @@ public class CommentController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CommentDtoGet))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> PutComment(int id, CommentDtoPut commentDtoPut)
     {
         if (!_handler.CommentExists(id))
@@ -63,6 +64,8 @@ public class CommentController : ControllerBase
         return Ok();
     }
 
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CommentDtoGet))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteComment(int id)
     {

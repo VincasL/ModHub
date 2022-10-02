@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModHub;
 
@@ -11,9 +12,10 @@ using ModHub;
 namespace ModHub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221002110428_AddRatingId")]
+    partial class AddRatingId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -110,9 +112,6 @@ namespace ModHub.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
-
                     b.Property<int?>("RatingId")
                         .HasColumnType("int");
 
@@ -125,6 +124,8 @@ namespace ModHub.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GameId");
+
+                    b.HasIndex("RatingId");
 
                     b.HasIndex("UserId");
 
@@ -218,6 +219,10 @@ namespace ModHub.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ModHub.Models.ModRating", "Rating")
+                        .WithMany()
+                        .HasForeignKey("RatingId");
+
                     b.HasOne("ModHub.Models.User", "User")
                         .WithMany("Mods")
                         .HasForeignKey("UserId")
@@ -225,6 +230,8 @@ namespace ModHub.Migrations
                         .IsRequired();
 
                     b.Navigation("Game");
+
+                    b.Navigation("Rating");
 
                     b.Navigation("User");
                 });

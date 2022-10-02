@@ -33,6 +33,12 @@ public class ApplicationDbContext : DbContext
                 .WithOne(x => x.User)
                 .OnDelete(DeleteBehavior.NoAction);
         });
+
+        modelBuilder.Entity<ModRating>(entity =>
+        {
+            entity.HasOne<User>(x => x.User).WithMany(x => x.ModRatings);
+            entity.HasOne<Mod>(x => x.Mod).WithMany(x => x.ModRatings);
+        });
         
         modelBuilder.Entity<Mod>(entity =>
         {
@@ -47,5 +53,7 @@ public class ApplicationDbContext : DbContext
             entity.HasOne(x => x.User)
                 .WithMany(x => x.Mods);
         });
+        
+        
     }
 }

@@ -2,6 +2,6 @@
 
 public class UserDto
 {
-    //TODO: add nickname
     public string Email { get; set; }
+    public string Username { get; set; }
 }

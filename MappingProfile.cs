@@ -26,6 +26,8 @@ public class MappingProfile : Profile {
         
         CreateMap<ModRating, RatingDtoGet>();
         CreateMap<RatingDtoGet, ModRating>();
-        CreateMap<RatingDto, ModRating>();
+        CreateMap<RatingDtoPost, ModRating>();
+        CreateMap<RatingDtoPut, ModRating>();
+
     }
 }

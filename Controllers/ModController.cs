@@ -9,20 +9,20 @@ namespace ModHub.Controllers;
 [Route("[controller]")]
 public class ModController : ControllerBase
 {
-    private readonly ModHandler _handler;
+    private readonly ModHandler _modHandler;
     private readonly CommentHandler _commentHandler;
     
-    public ModController(ModHandler handler, CommentHandler commentHandler)
+    public ModController(ModHandler modHandler, CommentHandler commentHandler)
     {
-        _handler = handler;
+        _modHandler = modHandler;
         _commentHandler = commentHandler;
     }
     
     [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GameDtoGet))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ModDtoGet>))]
     public async Task<IEnumerable<ModDtoGet>> GetAllMods()
     {
-        var result = await _handler.GetAllMods();
+        var result = await _modHandler.GetAllMods();
         return result;
     }
 
@@ -32,22 +32,22 @@ public class ModController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ModDtoGet>> GetMod(int id)
     {
-        if (!_handler.ModExists(id))
+        if (!_modHandler.ModExists(id))
         {
             return NotFound();
         }
         
-        var result = await _handler.GetMod(id);
+        var result = await _modHandler.GetMod(id);
 
         return result;
     }
     
     [HttpGet("{id}/comments")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CommentDtoGet>))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ModDtoGet>))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> GetCommentsByModId(int id)
     {
-        if (!_handler.ModExists(id))
+        if (!_modHandler.ModExists(id))
         {
             return NotFound();
         }
@@ -58,36 +58,40 @@ public class ModController : ControllerBase
     }
     
     [HttpPost]
-    [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ModDtoGet>> PostMod([FromBody] ModDto modDto)
     {
-        var result = await _handler.AddMod(modDto);
+        var result = await _modHandler.AddMod(modDto);
         return CreatedAtAction(nameof(GetMod), new { id = result.Id }, result);
     }
 
     [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModDtoGet))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> PutMod(int id, ModDto modDto)
     {
-        if (!_handler.ModExists(id))
+        if (!_modHandler.ModExists(id))
         {
             return NotFound();
         }
         
-        await _handler.UpdateMod(id, modDto);
+        await _modHandler.UpdateMod(id, modDto);
         return Ok();
     }
 
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModDtoGet))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteMod(int id)
     {
-        if (!_handler.ModExists(id))
+        if (!_modHandler.ModExists(id))
         {
             return NotFound();
         }
         
-        await _handler.SoftDeleteMod(id);
+        await _modHandler.SoftDeleteMod(id);
         return Ok();
     }
 }

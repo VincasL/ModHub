@@ -2,10 +2,8 @@
 
 namespace ModHub.DTO;
 
-public class RatingDto
+public class RatingDtoPut
 {
-    public int ModId { get; set; }
-    
     [Range(1, 5)]
     public int Rating { get; set; }
 }

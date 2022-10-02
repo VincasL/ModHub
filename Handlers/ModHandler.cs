@@ -11,6 +11,8 @@ public class ModHandler
 {
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
+    
+    const int LoggedInUserId = 2;
 
     public ModHandler(ApplicationDbContext context, IMapper mapper)
     {
@@ -31,14 +33,42 @@ public class ModHandler
     
     public async Task<ModDtoGet> GetMod(int id)
     {
-        var mod = await _context.Mods.FirstAsync(x => x.Id == id);
+        var mod = await _context.Mods
+            .Include(x=> x.User)
+            .FirstAsync(x => x.Id == id);
+        
+        mod.Rating = _context.ModRatings.Where(rating => rating.ModId == mod.Id).Average(r => r.Rating);
+        
         var modDto = _mapper.Map<Mod, ModDtoGet>(mod);
         return modDto;
     }
     
     public async Task<IEnumerable<ModDtoGet>> GetAllMods()
     {
-        var mods = await _context.Mods.Where(x => x.ModStatus != ModStatus.Deleted).ToListAsync();
+        var mods = await _context.Mods.Where(x => x.ModStatus != ModStatus.Deleted)
+            .Include(x=> x.User)
+            .ToListAsync();
+        
+        foreach (var mod in mods)
+        {
+            mod.Rating = _context.ModRatings.Where(rating => rating.ModId == mod.Id).Average(r => r.Rating);
+        }
+        
+        var modsDto = _mapper.Map<IEnumerable<Mod>, IEnumerable<ModDtoGet>>(mods);
+        return modsDto;
+    }
+    
+    public async Task<IEnumerable<ModDtoGet>> GetModsByGameId(int id)
+    {
+        var mods = await _context.Mods
+            .Where(x => x.ModStatus != ModStatus.Deleted || x.GameId == id)
+            .ToListAsync();
+
+        foreach (var mod in mods)
+        {
+            mod.Rating = _context.ModRatings.Where(rating => rating.ModId == mod.Id).Average(r => r.Rating);
+        }
+        
         var modsDto = _mapper.Map<IEnumerable<Mod>, IEnumerable<ModDtoGet>>(mods);
         return modsDto;
     }
@@ -72,4 +102,5 @@ public class ModHandler
     {
         return _context.Mods.Any(x => x.Id == id && x.ModStatus != ModStatus.Deleted);
     }
+    
 }

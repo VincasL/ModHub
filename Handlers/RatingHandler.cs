@@ -17,9 +17,9 @@ public class RatingHandler
         _mapper = mapper;
     }
     
-    public async Task<RatingDtoGet> AddRating(RatingDto ratingDto)
+    public async Task<RatingDtoGet> AddRating(RatingDtoPost ratingDtoPost)
     {
-        var rating = _mapper.Map<RatingDto, ModRating>(ratingDto);
+        var rating = _mapper.Map<RatingDtoPost, ModRating>(ratingDtoPost);
         await _context.ModRatings.AddAsync(rating);
         await _context.SaveChangesAsync();
         var ratingToReturn = _mapper.Map<ModRating, RatingDtoGet>(rating);
@@ -40,7 +40,7 @@ public class RatingHandler
         return ratingsDto;
     }
     
-    public async Task UpdateRating(int id, RatingDto ratingDto)
+    public async Task UpdateRating(int id, RatingDtoPut ratingDto)
     {
         var rating = await _context.ModRatings.FirstAsync( x=> x.Id == id);
         _context.Entry(rating).State = EntityState.Modified;
