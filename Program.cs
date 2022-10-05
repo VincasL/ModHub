@@ -1,12 +1,42 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using ModHub;
+using ModHub.Authentication;
 using ModHub.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
+var jwtTokenConfig = builder.Configuration.GetSection("jwtTokenConfig").Get<JwtTokenConfig>();
 
-// Add services to the container.
+builder.Services.AddSingleton(jwtTokenConfig);
+
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = true;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = jwtTokenConfig.Issuer,
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtTokenConfig.Secret)),
+        ValidAudience = jwtTokenConfig.Audience,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.FromMinutes(1)
+    };
+});
+builder.Services.AddSingleton<IJwtAuthManager, JwtAuthManager>();
+builder.Services.AddHostedService<JwtRefreshTokenCache>();
 
 builder.Services.AddControllers();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddTransient<ModsHandler>();
@@ -14,9 +44,13 @@ builder.Services.AddTransient<GamesHandler>();
 builder.Services.AddTransient<CommentsHandler>();
 builder.Services.AddTransient<UsersHandler>();
 builder.Services.AddTransient<RatingsHandler>();
+builder.Services.AddTransient<AuthHandler>();
+
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -27,6 +61,33 @@ builder.Services.AddSwaggerGen(c =>
     {
         c.IncludeXmlComments(xmlPath);
     }
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "ModHub API",
+        Version = "v1",
+        Description = "API for ModHub: uploading, sharing mods and feedback about them",
+    });
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please insert JWT with Bearer into field",
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        BearerFormat = "Bearer {token goes here}"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 });
 
 var app = builder.Build();
