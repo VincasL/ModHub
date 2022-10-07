@@ -7,12 +7,12 @@ namespace ModHub.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class RatingController : ControllerBase
+public class RatingsController : ControllerBase
 {
     private readonly RatingsHandler _handler;
     private ModsHandler _modsHandler;
 
-    public RatingController(RatingsHandler handler, ModsHandler modsHandler)
+    public RatingsController(RatingsHandler handler, ModsHandler modsHandler)
     {
         _handler = handler;
         _modsHandler = modsHandler;

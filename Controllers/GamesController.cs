@@ -7,12 +7,12 @@ namespace ModHub.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class GameController : ControllerBase
+public class GamesController : ControllerBase
 {
     private readonly GamesHandler _gamesHandler;
     private readonly ModsHandler _modsHandler;
 
-    public GameController(GamesHandler gamesHandler, ModsHandler modsHandler)
+    public GamesController(GamesHandler gamesHandler, ModsHandler modsHandler)
     {
         _gamesHandler = gamesHandler;
         _modsHandler = modsHandler;
@@ -41,20 +41,20 @@ public class GameController : ControllerBase
         return Ok(result);
     }
     
-    [HttpGet("{id}/mods")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GameDtoGet>))]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> GetGameMods(int id)
-    {
-        if (!_gamesHandler.GameExists(id))
-        {
-            return NotFound();
-        }
-        
-        var result = await _modsHandler.GetModsByGameId(id);
-
-        return Ok(result);
-    }
+    // [HttpGet("{id}/mods")]
+    // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GameDtoGet>))]
+    // [ProducesResponseType(StatusCodes.Status404NotFound)]
+    // public async Task<ActionResult> GetGameMods(int id)
+    // {
+    //     if (!_gamesHandler.GameExists(id))
+    //     {
+    //         return NotFound();
+    //     }
+    //     
+    //     var result = await _modsHandler.GetModsByGameId(id);
+    //
+    //     return Ok(result);
+    // }
     
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -76,8 +76,8 @@ public class GameController : ControllerBase
             return NotFound();
         }
         
-        await _gamesHandler.UpdateGame(id, gameDto);
-        return Ok();
+        var result = await _gamesHandler.UpdateGame(id, gameDto);
+        return Ok(result);
     }
     
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -91,7 +91,7 @@ public class GameController : ControllerBase
         }
         
         await _gamesHandler.SoftDeleteGame(id);
-        return Ok();
+        return NoContent();
     }
 
 }

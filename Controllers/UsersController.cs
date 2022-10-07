@@ -7,11 +7,11 @@ namespace ModHub.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class UserController : ControllerBase
+public class UsersController : ControllerBase
 {
     private readonly UsersHandler _handler;
 
-    public UserController(UsersHandler handler)
+    public UsersController(UsersHandler handler)
     {
         _handler = handler;
     }

@@ -10,6 +10,8 @@ public class MappingProfile : Profile {
         CreateMap<Mod, ModDtoGet>();
         CreateMap<ModDtoGet, Mod>();
         CreateMap<ModDto, Mod>();
+        CreateMap<ModDtoPut, Mod>();
+
         
         CreateMap<Game, GameDtoGet>();
         CreateMap<GameDtoGet, Game>();

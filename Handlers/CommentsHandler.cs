@@ -17,9 +17,10 @@ public class CommentsHandler
         _mapper = mapper;
     }
     
-    public async Task<CommentDtoGet> AddComment(CommentDtoPost commentDtoPost)
+    public async Task<CommentDtoGet> AddComment(CommentDtoPost commentDtoPost, int modId)
     {
         var comment = _mapper.Map<CommentDtoPost, Comment>(commentDtoPost);
+        comment.ModId = modId;
         //TODO: replace with authenticated user id
         comment.UserId = _context.Users.First().Id;
         await _context.Comments.AddAsync(comment);
@@ -49,7 +50,7 @@ public class CommentsHandler
         return commentsDto;
     }
     
-    public async Task UpdateComment(int id, CommentDtoPut commentDtoPut)
+    public async Task<CommentDtoGet> UpdateComment(int id, CommentDtoPut commentDtoPut)
     {
         var comment = await _context.Comments.FirstAsync( x=> x.Id == id);
         _context.Entry(comment).State = EntityState.Modified;
@@ -57,6 +58,9 @@ public class CommentsHandler
         _mapper.Map(commentDtoPut, comment);
 
         await _context.SaveChangesAsync();
+        
+        var commentToReturn = _mapper.Map<Comment, CommentDtoGet>(comment);
+        return commentToReturn;
     }
 
     public async Task DeleteComment(int id)
@@ -66,10 +70,22 @@ public class CommentsHandler
         await _context.SaveChangesAsync();
     }
 
-    public bool CommentExists(int id)
+    public bool CommentExists(int id, int gameId, int modId)
     {
-        return _context.Comments.Any(x => x.Id == id);
+        var comment = _context.Comments.FirstOrDefault(x => x.Id == id);
+        if (comment == null)
+        {
+            return false;
+        }
+
+        if (comment.ModId != modId)
+        {
+            return false;
+        }
+        
+        var mod = _context.Mods.FirstOrDefault(x => x.Id == modId);
+        if (mod == null) return false;
+        if (mod.GameId != gameId) return false;
+        return true;
     }
-
-
 }

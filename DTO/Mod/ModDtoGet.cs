@@ -14,4 +14,5 @@ public class ModDtoGet
     public string Description {get; set;}
     public UserDtoGet User { get; set; }
     public double Rating { get; set; }
+    public int GameId { get; set; }
 }

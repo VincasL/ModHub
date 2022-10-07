@@ -20,6 +20,7 @@ public class RatingsHandler
     public async Task<RatingDtoGet> AddRating(RatingDtoPost ratingDtoPost)
     {
         var rating = _mapper.Map<RatingDtoPost, ModRating>(ratingDtoPost);
+        rating.UserId = _context.Users.First().Id;
         await _context.ModRatings.AddAsync(rating);
         await _context.SaveChangesAsync();
         var ratingToReturn = _mapper.Map<ModRating, RatingDtoGet>(rating);

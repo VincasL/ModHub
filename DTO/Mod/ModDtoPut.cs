@@ -1,8 +1,6 @@
-﻿using ModHub.Enums;
+﻿namespace ModHub.DTO;
 
-namespace ModHub.DTO;
-
-public class ModDto
+public class ModDtoPut
 {
     public string Name { get; set; }
     public string? FileKey { get; set; }

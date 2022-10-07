@@ -40,7 +40,7 @@ public class GamesHandler
         return gameDto;
     }
     
-    public async Task UpdateGame(int id, GameDto gameDto)
+    public async Task<GameDtoGet> UpdateGame(int id, GameDto gameDto)
     {
         var game = await _context.Games.FirstAsync( x=> x.Id == id);
         _context.Entry(game).State = EntityState.Modified;
@@ -48,6 +48,9 @@ public class GamesHandler
         _mapper.Map(gameDto, game);
 
         await _context.SaveChangesAsync();
+        
+        var gameToReturn = _mapper.Map<Game, GameDtoGet>(game);
+        return gameToReturn;
     }
 
     public async Task DeleteGame(int id)
