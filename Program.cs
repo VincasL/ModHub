@@ -6,7 +6,6 @@ using Microsoft.OpenApi.Models;
 using ModHub;
 using ModHub.Authentication;
 using ModHub.Handlers;
-using ModHub.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var jwtTokenConfig = builder.Configuration.GetSection("jwtTokenConfig").Get<JwtTokenConfig>();
@@ -48,17 +47,9 @@ builder.Services.AddTransient<RatingsHandler>();
 builder.Services.AddTransient<AuthHandler>();
 
 
-// var server = builder.Configuration["DBServer"] ?? "localhost";
-var server = "db";
-var port = builder.Configuration["DBPort"] ?? "1433";
-var user = builder.Configuration["DBUser"] ?? "sa";
-var password = builder.Configuration["DBPassword"] ?? "Password123";
-var database = builder.Configuration["Database"] ?? "ModHub";
-
-var connectionString = $"Data Source={server},{port};Initial Catalog={database};User ID={user};Password={password}";
 
 builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseSqlServer(connectionString));
+    options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
