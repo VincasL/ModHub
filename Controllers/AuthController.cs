@@ -24,6 +24,41 @@ namespace ModHub.Controllers
         }
         
         [AllowAnonymous]
+        [HttpPost("Register")]
+        public async Task<ActionResult> Register([FromBody] UserRegisterDto registerDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            if (_usersHandler.UserEmailExists(registerDto.Email))
+            {
+                return BadRequest("User with this email address already exists.");
+            }
+
+            var user = await _authHandler.Register(registerDto);
+
+            var claims = new Claim[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+            };
+
+            var jwtResult = _jwtAuthManager.GenerateTokens(registerDto.Email, claims, DateTime.Now);
+            return Ok(new LoginResult
+            {
+                Name = user.Username,
+                Email = user.Email,
+                Role = (int)user.Role,
+                AccessToken = jwtResult.AccessToken,
+                RefreshToken = jwtResult.RefreshToken.TokenString,
+            });
+        }
+        
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<ActionResult> Login([FromBody] UserLoginDto loginDto)
         {

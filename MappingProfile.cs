@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ModHub.DTO;
+using ModHub.DTO.Auth;
 using ModHub.Models;
 
 namespace ModHub;
@@ -20,6 +21,7 @@ public class MappingProfile : Profile {
         CreateMap<User, UserDtoGet>();
         CreateMap<UserDtoGet, User>();
         CreateMap<UserDto, User>();
+        CreateMap<UserRegisterDto, User>();
         
         CreateMap<Comment, CommentDtoGet>();
         CreateMap<CommentDtoGet, Comment>();

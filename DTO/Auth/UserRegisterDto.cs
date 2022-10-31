@@ -5,9 +5,7 @@ namespace ModHub.DTO.Auth
     public class UserRegisterDto
     {
         [MaxLength(32)]
-        public string FirstName { get; set; }
-        [MaxLength(32)]
-        public string LastName { get; set; }
+        public string Username { get; set; }
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress]

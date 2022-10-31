@@ -42,7 +42,7 @@ namespace ModHub.Handlers
 
             await _context.Users.AddAsync(newUser);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return newUser;
         }

@@ -72,4 +72,8 @@ public class UsersHandler
     }
 
 
+    public bool UserEmailExists(string email)
+    {
+        return _context.Users.Any(u => u.Email == email);
+    }
 }
