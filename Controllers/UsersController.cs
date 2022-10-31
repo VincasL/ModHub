@@ -1,10 +1,12 @@
 ﻿using System.Net.Mime;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModHub.DTO;
 using ModHub.Handlers;
 
 namespace ModHub.Controllers;
 
+[Authorize(Roles = "Admin")]
 [ApiController]
 [Route("[controller]")]
 public class UsersController : ControllerBase
@@ -15,6 +17,7 @@ public class UsersController : ControllerBase
     {
         _handler = handler;
     }
+    
     
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<UserDtoGet>))]

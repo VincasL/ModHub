@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using ModHub;
 using ModHub.Authentication;
 using ModHub.Handlers;
+using ModHub.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var jwtTokenConfig = builder.Configuration.GetSection("jwtTokenConfig").Get<JwtTokenConfig>();
@@ -57,7 +58,7 @@ builder.Services.AddTransient<AuthHandler>();
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+    options => options.UseSqlServer("name=ConnectionStrings:Azure"));
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -80,7 +81,7 @@ builder.Services.AddSwaggerGen(c =>
         In = ParameterLocation.Header,
         Description = "Please insert JWT with Bearer into field",
         Name = "Authorization",
-        Type = SecuritySchemeType.Http,
+        Type = SecuritySchemeType.ApiKey,
         BearerFormat = "Bearer {token goes here}"
     });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement {
@@ -109,5 +110,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+PrepDb.PrepPopulation(app);
 
 app.Run();
