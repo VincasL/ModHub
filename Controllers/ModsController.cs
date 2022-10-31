@@ -54,7 +54,7 @@ public class ModsController : ControllerBase
         return result;
     }
     
-    [Authorize(Roles = "User,Admin")]
+    [Authorize(Roles = "User,Moderator,Admin")]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -71,7 +71,7 @@ public class ModsController : ControllerBase
         return CreatedAtAction(nameof(GetMod), new { id = result.Id, gameId }, result);
     }
 
-    [Authorize(Roles = "User,Admin")]
+    [Authorize(Roles = "User,Moderator,Admin")]
     [HttpPut("{modId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModDtoGet))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -96,8 +96,26 @@ public class ModsController : ControllerBase
         return Ok(result);
     }
     
+    [Authorize(Roles = "Moderator,Admin")]
+    [HttpPut("{modId}/modStatus")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModDtoGet))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ChangeModStatus(int modId, ModChangeStatusDto modChangeStatusDto, int gameId)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        if (!_modsHandler.ModExists(modId, gameId))
+        {
+            return NotFound();
+        }
+        
+        var result = await _modsHandler.ChangeModStatus(modId, modChangeStatusDto);
+        return Ok(result);
+    }
     
-    [Authorize(Roles = "User,Admin")]
+    
+    [Authorize(Roles = "User,Moderator,Admin")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModDtoGet))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpDelete("{modId}")]

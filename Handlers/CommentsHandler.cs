@@ -90,11 +90,19 @@ public class CommentsHandler
         return true;
     }
     
+    
+    
     public bool CommentBelongsToUserOrUserIsAdmin(int commentId, int userId)
     {
-        var isAdmin = _context.Users.First(x => x.Id == userId).Role == Role.Admin;
-        var belongsToUser = _context.Comments.First(x => x.Id == commentId).UserId == userId;
+        var user = _context.Users.First(x => x.Id == userId);
+        var isAdmin = user.Role is Role.Admin or Role.Moderator;
+        var belongsToUser = CommentBelongsToUser(commentId, userId);
 
         return isAdmin || belongsToUser;
+    }
+    
+    public bool CommentBelongsToUser(int commentId, int userId)
+    {
+        return _context.Comments.First(x => x.Id == commentId).UserId == userId;
     }
 }

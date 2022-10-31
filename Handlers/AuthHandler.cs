@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ModHub.DTO.Auth;
+using ModHub.Enums;
 using ModHub.Models;
 
 namespace ModHub.Handlers
@@ -39,6 +40,7 @@ namespace ModHub.Handlers
             var newUser = _mapper.Map<UserRegisterDto, User>(registerDto);
 
             newUser.PasswordHash = passwordHash;
+            newUser.Role = Role.User;
 
             await _context.Users.AddAsync(newUser);
 

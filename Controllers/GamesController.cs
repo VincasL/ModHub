@@ -51,7 +51,7 @@ public class GamesController : ControllerBase
         return CreatedAtAction(nameof(GetGame), new { id = result.Id }, result);
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Moderator")]
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GameDtoGet))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -109,25 +109,28 @@ public class ModsHandler
 
     public bool ModExists(int modId, int gameId)
     {
-        return _context.Mods.Any(x => x.Id == modId && x.ModStatus != ModStatus.Deleted);
+        return _context.Mods.Any(x => x.Id == modId && x.ModStatus != ModStatus.Deleted && x.GameId == gameId);
     }
     
-    
-
-    public bool ModExistsInGame(int id, int gameId)
-    {
-        var mod = _context.Mods.FirstOrDefault(x => x.Id == id);
-        if (mod == null) return false;
-        if (mod.GameId != gameId) return false;
-        return true;
-
-    }
-
     public bool ModBelongsToUserOrUserIsAdmin(int modId, int userId)
     {
-        var isAdmin = _context.Users.First(x => x.Id == userId).Role == Role.Admin;
+        var user = _context.Users.First(x => x.Id == userId);
+        var isAdmin = user.Role is Role.Admin or Role.Moderator;
         var belongsToUser = _context.Mods.First(x => x.Id == modId).UserId == userId;
 
         return isAdmin || belongsToUser;
+    }
+
+    public async Task<ModDtoGet> ChangeModStatus(int id, ModChangeStatusDto modChangeStatusDto)
+    {
+        var mod = await _context.Mods.FirstAsync( x=> x.Id == id);
+        _context.Entry(mod).State = EntityState.Modified;
+
+        mod.ModStatus = modChangeStatusDto.ModStatus;
+
+        await _context.SaveChangesAsync();
+        
+        var modToReturn = _mapper.Map<Mod, ModDtoGet>(mod);
+        return modToReturn;
     }
 }

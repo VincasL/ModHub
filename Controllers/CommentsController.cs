@@ -81,7 +81,7 @@ public class CommentsController : ControllerBase
             return NotFound();
         }
 
-        if (!_commentsHandler.CommentBelongsToUserOrUserIsAdmin(commentId, userId))
+        if (!_commentsHandler.CommentBelongsToUser(commentId, userId))
         {
             return Forbid();
         }
