@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,13 @@ builder.Services.AddAuthentication(x =>
         ClockSkew = TimeSpan.FromMinutes(1)
     };
 });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy =>
+        policy.RequireClaim(ClaimTypes.Role, "Admin"));
+});
+
 builder.Services.AddSingleton<IJwtAuthManager, JwtAuthManager>();
 builder.Services.AddHostedService<JwtRefreshTokenCache>();
 
@@ -72,7 +80,7 @@ builder.Services.AddSwaggerGen(c =>
         In = ParameterLocation.Header,
         Description = "Please insert JWT with Bearer into field",
         Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
+        Type = SecuritySchemeType.Http,
         BearerFormat = "Bearer {token goes here}"
     });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement {

@@ -1,4 +1,5 @@
 ﻿using System.Net.Mime;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModHub.DTO;
 using ModHub.Handlers;
@@ -33,6 +34,7 @@ public class RatingsController : ControllerBase
         return result;
     }
     
+    [Authorize]
     [HttpPost]
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status201Created)]
@@ -43,7 +45,7 @@ public class RatingsController : ControllerBase
         return CreatedAtAction(nameof(GetRating), new { id = result.Id }, result);
     }
 
-    
+    [Authorize]
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -58,7 +60,7 @@ public class RatingsController : ControllerBase
         return Ok();
     }
 
-    
+    [Authorize]
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

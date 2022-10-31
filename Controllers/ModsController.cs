@@ -1,4 +1,6 @@
 ﻿using System.Net.Mime;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModHub.DTO;
 using ModHub.Handlers;
@@ -12,12 +14,15 @@ public class ModsController : ControllerBase
     private readonly ModsHandler _modsHandler;
     private readonly CommentsHandler _commentsHandler;
     private readonly GamesHandler _gamesHandler;
+    private readonly GamesHandler _usersHandler;
+
     
-    public ModsController(ModsHandler modsHandler, CommentsHandler commentsHandler, GamesHandler gamesHandler)
+    public ModsController(ModsHandler modsHandler, CommentsHandler commentsHandler, GamesHandler gamesHandler, GamesHandler usersHandler)
     {
         _modsHandler = modsHandler;
         _commentsHandler = commentsHandler;
         _gamesHandler = gamesHandler;
+        _usersHandler = usersHandler;
     }
     
     [HttpGet]
@@ -49,63 +54,68 @@ public class ModsController : ControllerBase
         return result;
     }
     
-    // [HttpGet("{id}/comments")]
-    // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ModDtoGet>))]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // public async Task<ActionResult> GetCommentsByModId(int id, int gameId)
-    // {
-    //     if (!_modsHandler.ModExists(id))
-    //     {
-    //         return NotFound();
-    //     }
-    //     
-    //     var result = await _commentsHandler.GetCommentsByModId(id);
-    //
-    //     return Ok(result);
-    // }
-    
+    [Authorize(Roles = "User,Admin")]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<ModDtoGet>> PostMod([FromBody] ModDto modDto, [FromRoute] int gameId)
     {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
         if (!_gamesHandler.GameExists(gameId))
         {
             return NotFound();
         }
 
-        var result = await _modsHandler.AddMod(modDto, gameId);
+        var result = await _modsHandler.AddMod(modDto, gameId, userId);
         return CreatedAtAction(nameof(GetMod), new { id = result.Id, gameId }, result);
     }
 
-    [HttpPut("{id}")]
+    [Authorize(Roles = "User,Admin")]
+    [HttpPut("{modId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModDtoGet))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> PutMod(int id, ModDtoPut modDto, int gameId)
+    public async Task<IActionResult> PutMod(int modId, ModDtoPut modDto, int gameId)
     {
-        
-        if (!_modsHandler.ModExists(id, gameId))
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        if (!_modsHandler.ModExists(modId, gameId))
         {
             return NotFound();
         }
+        
+        if (!_modsHandler.ModBelongsToUserOrUserIsAdmin(modId, userId))
+        {
+            return Forbid();
+        }
+        
 
-        var result = await _modsHandler.UpdateMod(id, modDto);
+
+        var result = await _modsHandler.UpdateMod(modId, modDto);
         return Ok(result);
     }
-
+    
+    
+    [Authorize(Roles = "User,Admin")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModDtoGet))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteMod(int id, int gameId)
+    [HttpDelete("{modId}")]
+    public async Task<IActionResult> DeleteMod(int modId, int gameId)
     {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        if (!_modsHandler.ModBelongsToUserOrUserIsAdmin(modId, userId))
+        {
+            return Forbid();
+        }
         
-        if (!_modsHandler.ModExists(id, gameId))
+        if (!_modsHandler.ModExists(modId, gameId))
         {
             return NotFound();
         }
         
-        await _modsHandler.SoftDeleteMod(id);
+        await _modsHandler.SoftDeleteMod(modId);
         return Ok();
     }
 }

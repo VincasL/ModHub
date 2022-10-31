@@ -1,4 +1,4 @@
-﻿using System.Net.Mime;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModHub.DTO;
 using ModHub.Handlers;
@@ -41,21 +41,7 @@ public class GamesController : ControllerBase
         return Ok(result);
     }
     
-    // [HttpGet("{id}/mods")]
-    // [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GameDtoGet>))]
-    // [ProducesResponseType(StatusCodes.Status404NotFound)]
-    // public async Task<ActionResult> GetGameMods(int id)
-    // {
-    //     if (!_gamesHandler.GameExists(id))
-    //     {
-    //         return NotFound();
-    //     }
-    //     
-    //     var result = await _modsHandler.GetModsByGameId(id);
-    //
-    //     return Ok(result);
-    // }
-    
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -65,6 +51,7 @@ public class GamesController : ControllerBase
         return CreatedAtAction(nameof(GetGame), new { id = result.Id }, result);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GameDtoGet))]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -80,6 +67,7 @@ public class GamesController : ControllerBase
         return Ok(result);
     }
     
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpDelete("{id}")]
@@ -93,5 +81,4 @@ public class GamesController : ControllerBase
         await _gamesHandler.SoftDeleteGame(id);
         return NoContent();
     }
-
 }

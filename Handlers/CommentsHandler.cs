@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ModHub.DTO;
+using ModHub.Enums;
 using ModHub.Models;
 
 namespace ModHub.Handlers;
@@ -17,12 +18,11 @@ public class CommentsHandler
         _mapper = mapper;
     }
     
-    public async Task<CommentDtoGet> AddComment(CommentDtoPost commentDtoPost, int modId)
+    public async Task<CommentDtoGet> AddComment(CommentDtoPost commentDtoPost, int modId, int userId)
     {
         var comment = _mapper.Map<CommentDtoPost, Comment>(commentDtoPost);
         comment.ModId = modId;
-        //TODO: replace with authenticated user id
-        comment.UserId = _context.Users.First().Id;
+        comment.UserId = userId;
         await _context.Comments.AddAsync(comment);
         await _context.SaveChangesAsync();
         var commentToReturn = _mapper.Map<Comment, CommentDtoGet>(comment);
@@ -83,9 +83,18 @@ public class CommentsHandler
             return false;
         }
         
-        var mod = _context.Mods.FirstOrDefault(x => x.Id == modId);
+        var mod = _context.Mods.FirstOrDefault(x => x.Id == modId && x.ModStatus != ModStatus.Deleted);
         if (mod == null) return false;
+        if (mod.ModStatus == ModStatus.Deleted) return false;
         if (mod.GameId != gameId) return false;
         return true;
+    }
+    
+    public bool CommentBelongsToUserOrUserIsAdmin(int commentId, int userId)
+    {
+        var isAdmin = _context.Users.First(x => x.Id == userId).Role == Role.Admin;
+        var belongsToUser = _context.Comments.First(x => x.Id == commentId).UserId == userId;
+
+        return isAdmin || belongsToUser;
     }
 }

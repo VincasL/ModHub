@@ -17,13 +17,14 @@ public class ModsHandler
         _context = context;
         _mapper = mapper;
     }
-    
-    public async Task<ModDtoGet> AddMod(ModDto modDto, int gameId)
+
+
+
+    public async Task<ModDtoGet> AddMod(ModDto modDto, int gameId, int userId)
     {
         var mod = _mapper.Map<ModDto, Mod>(modDto);
         mod.GameId = gameId;
-        //TODO: replace with authenticated user
-        mod.UserId = _context.Users.First().Id;
+        mod.UserId = userId;
         await _context.Mods.AddAsync(mod);
         await _context.SaveChangesAsync();
         var modToReturn = _mapper.Map<Mod, ModDtoGet>(mod);
@@ -110,6 +111,8 @@ public class ModsHandler
     {
         return _context.Mods.Any(x => x.Id == modId && x.ModStatus != ModStatus.Deleted);
     }
+    
+    
 
     public bool ModExistsInGame(int id, int gameId)
     {
@@ -118,5 +121,13 @@ public class ModsHandler
         if (mod.GameId != gameId) return false;
         return true;
 
+    }
+
+    public bool ModBelongsToUserOrUserIsAdmin(int modId, int userId)
+    {
+        var isAdmin = _context.Users.First(x => x.Id == userId).Role == Role.Admin;
+        var belongsToUser = _context.Mods.First(x => x.Id == modId).UserId == userId;
+
+        return isAdmin || belongsToUser;
     }
 }
