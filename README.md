@@ -14,6 +14,7 @@ Svečias gali:
 •	Užsiregistruoti / prisijungti prie aplikacijos
 
 Užsiregistravęs vartotojas gali:
+
 •	Įkelti žaidimų modifikacijas
 
 •	Valdyti savo įkeltas žaidimų modifikacijas
@@ -22,10 +23,18 @@ Užsiregistravęs vartotojas gali:
 
 •	Vertinti žaidimų modifikacijas
 
-•	Valdyti savo profilį
+Moderatorius gali:
+
+•	Patvirtinti ir valdyti modifikacijas
+
+•	Trinti komentarus
+
+•	Redaguoti žaidimo informaciją
 
 Administratorius gali:
 
-•	Patvirtinti ir valdyti modifikacijas
+•	Valdyti modifikacijas
+
+•	Valdyti žaidimus
 
 •	Valdyti vartotojus
