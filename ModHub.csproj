@@ -25,4 +25,30 @@
       <Folder Include="DTO\Auth" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="ClientApp\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="ClientApp\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="ClientApp\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="ClientApp\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="ClientApp\angular.json" />
+      <_ContentIncludedByDefault Remove="ClientApp\package-lock.json" />
+      <_ContentIncludedByDefault Remove="ClientApp\package.json" />
+      <_ContentIncludedByDefault Remove="ClientApp\src\proxy.conf.json" />
+      <_ContentIncludedByDefault Remove="ClientApp\tsconfig.app.json" />
+      <_ContentIncludedByDefault Remove="ClientApp\tsconfig.json" />
+      <_ContentIncludedByDefault Remove="ClientApp\tsconfig.spec.json" />
+    </ItemGroup>
+
 </Project>

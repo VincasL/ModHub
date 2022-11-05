@@ -12,6 +12,7 @@ using ModHub.Models;
 var builder = WebApplication.CreateBuilder(args);
 var jwtTokenConfig = builder.Configuration.GetSection("jwtTokenConfig").Get<JwtTokenConfig>();
 
+
 builder.Services.AddSingleton(jwtTokenConfig);
 
 builder.Services.AddAuthentication(x =>
@@ -41,6 +42,17 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim(ClaimTypes.Role, "Admin"));
 });
 
+var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: myAllowSpecificOrigins,
+        policy  =>
+        {
+            policy.WithOrigins("http://localhost:4200");
+        });
+});
+
 builder.Services.AddSingleton<IJwtAuthManager, JwtAuthManager>();
 builder.Services.AddHostedService<JwtRefreshTokenCache>();
 
@@ -58,7 +70,7 @@ builder.Services.AddTransient<AuthHandler>();
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseSqlServer("name=ConnectionStrings:Azure"));
+    options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -100,6 +112,8 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+app.UsePathBase(new PathString("/api"));
+app.UseRouting();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();
@@ -108,6 +122,7 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors(myAllowSpecificOrigins);
 
 app.MapControllers();
 PrepDb.PrepPopulation(app);
