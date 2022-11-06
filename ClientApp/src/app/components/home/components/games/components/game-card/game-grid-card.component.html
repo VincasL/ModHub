@@ -1,6 +1,7 @@
-<div class="card">
+<div class="card g-0">
   <img class="card-img-top" [src]="game.imageUrl" alt="Card image cap" />
   <div class="card-body">
     <p class="card-text">{{ game.name }}</p>
+    <a class="stretched-link" (click)="gameClick.emit(game)"></a>
   </div>
 </div>

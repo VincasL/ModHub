@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Game } from '../../../../../../services/rest/games-rest.service';
+import { Game } from '../../../../../../services/rest/models';
 
 @Component({
   selector: 'app-game-card',
@@ -7,7 +7,7 @@ import { Game } from '../../../../../../services/rest/games-rest.service';
   styleUrls: ['./game-card.component.css'],
 })
 export class GameCardComponent implements OnInit {
-  @Input() game!: Game
+  @Input() game!: Game;
   constructor() {}
 
   ngOnInit(): void {}

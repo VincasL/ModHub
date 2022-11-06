@@ -1,0 +1,5 @@
+<div >
+  <div *ngFor="let mod of mods$ | async">
+    <app-mod-list-card (modClick)="onModClick(mod)" [mod]="mod"></app-mod-list-card>
+  </div>
+</div>

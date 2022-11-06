@@ -65,6 +65,7 @@ public class ModsHandler
     {
         var mods = await _context.Mods
             .Include(x=> x.Game)
+            .Include(x => x.User)
             .Where(x => x.ModStatus != ModStatus.Deleted && x.GameId == id)
             .ToListAsync();
 
