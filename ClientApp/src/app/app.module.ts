@@ -16,10 +16,10 @@ import { GameCardComponent } from './components/home/components/game/components/
 import { ModListComponent } from './components/home/components/game/components/mod-list/mod-list.component';
 import { ModComponent } from './components/mod/mod.component';
 import { HeaderComponent } from './components/header/header.component';
-import {NgxNavbarModule} from "ngx-bootstrap-navbar";
-import {CollapseModule} from "ngx-bootstrap/collapse";
+import { NgxNavbarModule } from 'ngx-bootstrap-navbar';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -35,7 +35,6 @@ import { RegisterComponent } from './components/register/register.component';
     ModComponent,
     HeaderComponent,
     LoginComponent,
-    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +44,7 @@ import { RegisterComponent } from './components/register/register.component';
     CommonModule,
     NgxNavbarModule,
     CollapseModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

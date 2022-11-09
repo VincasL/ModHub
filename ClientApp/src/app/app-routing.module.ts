@@ -4,12 +4,14 @@ import { HomeComponent } from './components/home/home.component';
 import { GameComponent } from './components/home/components/game/game.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ModComponent } from './components/mod/mod.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', pathMatch: 'full', component: HomeComponent },
   { path: 'game/:gameId', component: GameComponent },
   { path: 'game/:gameId/mod/:modId', component: ModComponent },
+  { path: 'login', component: LoginComponent },
 
   { path: '**', component: NotFoundComponent },
 ];
