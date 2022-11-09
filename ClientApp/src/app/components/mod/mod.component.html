@@ -1,1 +1,4 @@
-<p>mod works!</p>
+<div *ngIf="mod$ | async as mod">
+  <img [src]="mod.imageUrl" alt=""/>
+  <div [innerText]='mod.description'></div>
+</div>

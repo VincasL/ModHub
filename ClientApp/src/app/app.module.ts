@@ -15,6 +15,11 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { GameCardComponent } from './components/home/components/game/components/game-card/game-card.component';
 import { ModListComponent } from './components/home/components/game/components/mod-list/mod-list.component';
 import { ModComponent } from './components/mod/mod.component';
+import { HeaderComponent } from './components/header/header.component';
+import {NgxNavbarModule} from "ngx-bootstrap-navbar";
+import {CollapseModule} from "ngx-bootstrap/collapse";
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +32,10 @@ import { ModComponent } from './components/mod/mod.component';
     ModListComponent,
     ModListCardComponent,
     NotFoundComponent,
-    ModComponent
+    ModComponent,
+    HeaderComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +43,8 @@ import { ModComponent } from './components/mod/mod.component';
     AppRoutingModule,
     HttpClientModule,
     CommonModule,
+    NgxNavbarModule,
+    CollapseModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
