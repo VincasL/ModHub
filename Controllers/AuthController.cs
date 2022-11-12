@@ -39,7 +39,7 @@ namespace ModHub.Controllers
 
             var user = await _authHandler.Register(registerDto);
 
-            var claims = new Claim[]
+            var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
@@ -50,9 +50,6 @@ namespace ModHub.Controllers
             var jwtResult = _jwtAuthManager.GenerateTokens(registerDto.Email, claims, DateTime.Now);
             return Ok(new LoginResult
             {
-                Name = user.Username,
-                Email = user.Email,
-                Role = (int)user.Role,
                 AccessToken = jwtResult.AccessToken,
                 RefreshToken = jwtResult.RefreshToken.TokenString,
             });
@@ -85,9 +82,6 @@ namespace ModHub.Controllers
             var jwtResult = _jwtAuthManager.GenerateTokens(loginDto.Email, claims, DateTime.Now);
             return Ok(new LoginResult
             {
-                Name = user.Username,
-                Email = user.Email,
-                Role = (int)user.Role,
                 AccessToken = jwtResult.AccessToken,
                 RefreshToken = jwtResult.RefreshToken.TokenString,
             });
@@ -124,9 +118,6 @@ namespace ModHub.Controllers
 
                 var result = new LoginResult
                 {
-                    Name = newJwtClaims.FindFirstValue(ClaimTypes.Name),
-                    Email = newJwtClaims.FindFirstValue(ClaimTypes.Email),
-                    // Role = int.Parse(newJwtClaims.FindFirstValue(ClaimTypes.Role)),
                     AccessToken = jwtResult.AccessToken,
                     RefreshToken = jwtResult.RefreshToken.TokenString
                 };

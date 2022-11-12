@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthRestService } from '../../services/rest/auth-rest.service';
 import { tap } from 'rxjs';
+import { AuthService } from '../../services/shared/auth.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly authRestService: AuthRestService
+    private readonly authRestService: AuthRestService,
+    private readonly authService: AuthService,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -30,6 +34,10 @@ export class LoginComponent implements OnInit {
 
     this.authRestService
       .login(formValue.email ?? '', formValue.password ?? '')
-      .pipe(tap((x) => console.log(x))).subscribe();
+      .pipe(
+        tap((loginDto) => this.authService.login(loginDto)),
+        tap(() => this.router.navigate(['']))
+      )
+      .subscribe();
   }
 }

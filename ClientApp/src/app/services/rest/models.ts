@@ -39,3 +39,13 @@ export enum ModStatus {
   Declined,
   Deleted,
 }
+
+export interface LoginDto {
+  name: string;
+  email: string;
+  role: Role;
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface RegisterDto {}

@@ -16,7 +16,22 @@
     <ngx-navbar-collapse #collapse="ngxNavbarCollapse">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="login">Login</a>
+          <a
+            *ngIf="!(authService.isLoggedIn$ | async)"
+            class="nav-link active"
+            aria-current="page"
+            href=""
+            (click)="onLoginClick()"
+            >Login</a
+          >
+          <a
+            *ngIf="authService.isLoggedIn$ | async"
+            class="nav-link active"
+            aria-current="page"
+            href=""
+            (click)="onLogoutClick()"
+            >Logout</a
+          >
         </li>
       </ul>
     </ngx-navbar-collapse>
