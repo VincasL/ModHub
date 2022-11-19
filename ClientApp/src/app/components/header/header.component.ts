@@ -37,4 +37,9 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['mods']);
     return false;
   }
+
+  onModSubmissionsClick() {
+    this.router.navigate(['submissions']);
+    return false;
+  }
 }

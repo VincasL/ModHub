@@ -8,10 +8,10 @@ export interface Game {
 }
 
 export enum Role {
-  Guest,
-  User,
-  Moderator,
-  Admin
+  Guest= "Guest",
+  User = "User",
+  Moderator = "Moderator",
+  Admin = "Admin"
 }
 
 export interface User {

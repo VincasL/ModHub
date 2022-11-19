@@ -1,0 +1,22 @@
+<div class="modal-xl">
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">{{ mod.name }} preview</h5>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="onClose()"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <img [src]="mod.imageUrl" alt="" class="w-100 pb-3"/>
+
+    <div [innerText]="mod.description"></div>
+    <div>{{ mod.downloadLink }}</div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="onClose()">
+      Close
+    </button>
+  </div>
+</div>

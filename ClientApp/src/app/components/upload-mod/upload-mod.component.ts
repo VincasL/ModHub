@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {ModsRestService} from '../../services/rest/mods-rest.service';
-import {GamesRestService} from '../../services/rest/games-rest.service';
-import {map, Observable} from 'rxjs';
-import {SelectOption} from '../../shared/interfaces';
-import {Mod} from '../../services/rest/models';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { ModsRestService } from '../../services/rest/mods-rest.service';
+import { GamesRestService } from '../../services/rest/games-rest.service';
+import { map, Observable, tap } from 'rxjs';
+import { SelectOption } from '../../shared/interfaces';
+import { Mod } from '../../services/rest/models';
+import { ToastService } from '../../modules/toaster/services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-upload-mod',
@@ -33,7 +35,9 @@ export class UploadModComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly modsRestService: ModsRestService,
-    private readonly gamesRestService: GamesRestService
+    private readonly gamesRestService: GamesRestService,
+    private readonly toastService: ToastService,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -50,6 +54,12 @@ export class UploadModComponent implements OnInit {
 
     this.modsRestService
       .postMod(formValue.gameId!, formValue as unknown as Mod)
+      .pipe(
+        tap(() =>
+          this.toastService.showSuccessToast('Mod uploaded successfully')
+        ),
+        tap(() => this.router.navigate(['mods']))
+      )
       .subscribe();
   }
 }

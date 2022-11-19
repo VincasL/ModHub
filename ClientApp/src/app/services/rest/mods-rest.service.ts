@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Mod } from './models';
+import {ModStatus} from "../../shared/enums/mod-status";
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,10 @@ export class ModsRestService {
     return this.httpClient.get<Mod[]>(`${this.baseUrl}/1/mods/user`);
   }
 
+  getWaitingForApprovalMods(): Observable<Mod[]> {
+    return this.httpClient.get<Mod[]>(`${this.baseUrl}/${1}/mods/submissions`);
+  }
+
   getMod(gameId: number, modId: number): Observable<Mod> {
     return this.httpClient.get<Mod>(`${this.baseUrl}/${gameId}/mods/${modId}`);
   }
@@ -27,6 +32,10 @@ export class ModsRestService {
 
   putMod(gameId: number, modId: number, mod: Mod): Observable<Mod> {
     return this.httpClient.put<Mod>(`${this.baseUrl}/${gameId}/mods/${modId}`, mod)
+  }
+
+  putModStatus(gameId: number, modId: number, modStatus: ModStatus): Observable<Mod> {
+    return this.httpClient.put<Mod>(`${this.baseUrl}/${gameId}/mods/${modId}/modStatus`, {modStatus})
   }
 
   deleteMod(mod: Mod) {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { LoginDto, Role, User } from '../rest/models';
+import { LoginDto, Role } from '../rest/models';
 import { SessionStorageKeys } from '../../shared/enums';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, map, tap } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 
 interface UserData {
@@ -23,7 +23,9 @@ export class AuthService {
   private userDataSubject = new BehaviorSubject<UserData>(this.guestUserData);
 
   userData$ = this.userDataSubject.asObservable();
-  role$ = this.userData$.pipe(map((userData) => userData.role));
+  role$ = this.userData$.pipe(
+    map((userData) => userData.role)
+  );
   isLoggedIn$ = this.role$.pipe(map((role) => role !== Role.Guest));
 
   login(loginDto: LoginDto) {
@@ -62,7 +64,16 @@ export class AuthService {
     }
 
     try {
-      const userData: UserData = jwt_decode(accessToken);
+      const userDataRaw = jwt_decode(accessToken) as any;
+
+      const userData = {
+        username: userDataRaw[
+          'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+        ] as string,
+        email: userDataRaw['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
+        role: userDataRaw['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+      } as UserData;
+
       this.userDataSubject.next(userData);
     } catch (Error) {
       this.removeToken();
@@ -70,7 +81,7 @@ export class AuthService {
     }
   }
 
-  private resetUserData(){
+  private resetUserData() {
     this.userDataSubject.next(this.guestUserData);
   }
 }

@@ -159,4 +159,15 @@ public class ModsHandler
     }
 
 
+    public async Task<object?> GetWaitingForApprovalMods()
+    {
+        var mods = await _context.Mods
+            .Include(x=> x.Game)
+            .Include(x => x.User)
+            .Where(x => x.ModStatus == ModStatus.WaitingForApproval)
+            .ToListAsync();
+
+        var modsDto = _mapper.Map<IEnumerable<Mod>, IEnumerable<ModDtoGet>>(mods);
+        return modsDto;
+    }
 }

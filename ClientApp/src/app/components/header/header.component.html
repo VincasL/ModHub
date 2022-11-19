@@ -44,12 +44,22 @@
         </li>
         <li class="nav-item">
           <a
-            *ngIf="authService.isLoggedIn$ | async"
+            *ngIf="(authService.role$ | async) === Role.User"
             class="nav-link active"
             aria-current="page"
             href=""
             (click)="onMyUploadsClick()"
             >My uploads</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="(authService.role$ | async) === Role.Moderator"
+            class="nav-link active"
+            aria-current="page"
+            href=""
+            (click)="onModSubmissionsClick()"
+          >Mod submissions</a
           >
         </li>
       </ul>

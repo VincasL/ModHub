@@ -5,6 +5,7 @@ import { ModsRestService } from '../../../../services/rest/mods-rest.service';
 import { Game, Mod } from '../../../../services/rest/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ToastService } from '../../../../modules/toaster/services/toast.service';
 
 @Component({
   selector: 'app-mod-edit',
@@ -26,7 +27,8 @@ export class ModEditComponent implements OnInit {
     private readonly modsRestService: ModsRestService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    private location: Location
+    private location: Location,
+    private readonly toastService: ToastService
   ) {}
 
   routeParams$ = this.route.params.pipe(
@@ -64,6 +66,9 @@ export class ModEditComponent implements OnInit {
         first(),
         switchMap((params) =>
           this.modsRestService.putMod(params.gameId, params.modId, formValue)
+        ),
+        tap(() =>
+          this.toastService.showSuccessToast('Mod saved successfully')
         ),
         tap(() => this.location.back())
       )

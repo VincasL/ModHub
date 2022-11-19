@@ -40,11 +40,22 @@ public class ModsController : ControllerBase
     
     [HttpGet("user")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ModDtoGet>))]
-    public async Task<ActionResult> GetAllUserMods(int gameId)
+    public async Task<ActionResult> GetAllUserMods()
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
         var result =  await _modsHandler.GetModsByUserId(userId);
+        return Ok(result);
+    }
+    
+    [HttpGet("submissions")]
+    [Authorize(Roles = "Moderator,Admin")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ModDtoGet>))]
+    public async Task<ActionResult> GetWaitingForApprovalMods()
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        var result =  await _modsHandler.GetWaitingForApprovalMods();
         return Ok(result);
     }
 

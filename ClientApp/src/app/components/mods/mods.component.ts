@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModsRestService } from '../../services/rest/mods-rest.service';
-import { BehaviorSubject, filter, Observable, switchMap, tap } from 'rxjs';
+import {BehaviorSubject, filter, map, mapTo, Observable, switchMap, tap} from 'rxjs';
 import { Mod } from '../../services/rest/models';
 import { ActionType } from '../../shared/enums';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
@@ -34,19 +34,7 @@ export class ModsComponent implements OnInit {
     switchMap(() => this.modsRestService.getUserMods())
   );
 
-  games$ = this.gamesRestService.getGames();
-
   ngOnInit(): void {}
-
-  onModClick(mod: Mod) {}
-
-  onEditClick() {
-    console.log('edit');
-  }
-
-  onDeleteClick() {
-    console.log('delete');
-  }
 
   onActionClick(mod: Mod, actionType: ActionType) {
     switch (actionType) {
@@ -67,10 +55,12 @@ export class ModsComponent implements OnInit {
   }
 
   openModal(mod: Mod) {
-    this.modalRef = this.modalService.open(ConfirmModalComponent);
+    const title = `Are you sure you want to delete ${mod.name}?`
+    this.modalRef = this.modalService.open(ConfirmModalComponent, {data: {title}});
 
     this.modalRef.onClose
       .pipe(
+        map((result) => result.success),
         filter(Boolean),
         switchMap(() => this.modsRestService.deleteMod(mod)),
         tap(() => this.refreshModsSubject.next())

@@ -8,3 +8,9 @@ export enum ActionType {
   Edit,
   Delete
 }
+
+export enum SubmissionActionType {
+  View,
+  Approve,
+  Decline
+}

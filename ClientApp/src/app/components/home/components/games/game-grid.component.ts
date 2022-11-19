@@ -21,7 +21,6 @@ export class GameGrid implements OnInit {
   }
 
   onGameClick(game: Game) {
-    console.log(game);
     this.router.navigate(['game', game.id]);
   }
 }

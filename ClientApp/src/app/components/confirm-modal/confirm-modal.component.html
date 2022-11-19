@@ -7,12 +7,16 @@
     (click)="onClose()"
   ></button>
 </div>
-<div class="modal-body">...</div>
+<div class="modal-body">{{ title }}</div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
-    Close
+  <button type="button" class="btn btn-secondary" (click)="onClose()">
+    {{ cancelButtonText }}
   </button>
-  <button type="button" class="btn btn-primary" (click)="modalRef.close(true)">
-    Save changes
+  <button
+    type="button"
+    [ngClass]="['btn', 'btn-primary', isSuccess ? 'btn-success' : 'btn-danger']"
+    (click)="onClose(true)"
+  >
+    {{ saveButtonText }}
   </button>
 </div>

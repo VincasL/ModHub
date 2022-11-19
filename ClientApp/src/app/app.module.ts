@@ -31,6 +31,8 @@ import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { ModEditComponent } from './components/mods/components/mod-edit/mod-edit.component';
 import { ToastComponent } from './modules/toaster/components/toast/toast.component';
 import { ToasterComponent } from './modules/toaster/toaster.component';
+import { ModSubmissionsComponent } from './components/mod-submissions/mod-submissions.component';
+import { ModPreviewModalComponent } from './components/mod-submissions/components/mod-preview-modal/mod-preview-modal.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { ToasterComponent } from './modules/toaster/toaster.component';
     ModEditComponent,
     ToasterComponent,
     ToastComponent,
+    ModSubmissionsComponent,
+    ModPreviewModalComponent,
   ],
   imports: [
     BrowserModule,
