@@ -27,8 +27,6 @@ Moderatorius gali:
 
 •	Patvirtinti ir valdyti modifikacijas
 
-•	Trinti komentarus
-
 •	Redaguoti žaidimo informaciją
 
 Administratorius gali:

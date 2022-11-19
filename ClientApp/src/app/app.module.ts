@@ -25,7 +25,6 @@ import { UploadModComponent } from './components/upload-mod/upload-mod.component
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { ModsComponent } from './components/mods/mods.component';
-import { ModListDashboardItemComponent } from './components/mods/components/mod-list-dashboard-item/mod-list-dashboard-item.component';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { ModEditComponent } from './components/mods/components/mod-edit/mod-edit.component';
@@ -51,7 +50,6 @@ import { StarRatingComponent } from './components/home/common/star-rating/star-r
     LoginComponent,
     UploadModComponent,
     ModsComponent,
-    ModListDashboardItemComponent,
     ConfirmModalComponent,
     ModEditComponent,
     ToasterComponent,
