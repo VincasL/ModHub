@@ -7,11 +7,13 @@
     </div>
     <div class="col-8">
       <div class="card-body">
-        <p class="card-text">{{mod.name}}</p>
-        <p class="card-text">{{mod.user.username}}</p>
-        <p class="card-text">{{mod.totalDownloads}}</p>
-        <p class="card-text">{{mod.rating}}</p>
+        <h4 class="card-text">{{mod.name}}</h4>
+        <p class="card-text m-0"><i class="material-icons">person</i>Uploaded by: {{mod.createdBy.username}}</p>
+        <p class="card-text m-0" ><i class="material-icons">file_download</i>Total downloads: {{mod.totalDownloads}}</p>
+        <app-star-rating [mod]="mod" (onValueChange)="onModRatingChange($event)"></app-star-rating>
+        <p class="p-0">{{mod.totalRatings}} votes, {{mod.rating.toFixed(1)}}/5</p>
         <button (click)="onModClick(mod)">Download</button>
+
       </div>
     </div>
   </div>

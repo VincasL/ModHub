@@ -22,7 +22,7 @@ public class ApplicationDbContext : DbContext
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasMany(x => x.Mods)
-                .WithOne(x => x.User)
+                .WithOne(x => x.CreatedBy)
                 .OnDelete(DeleteBehavior.NoAction);
 
             entity.HasMany(x => x.Comments)
@@ -50,7 +50,7 @@ public class ApplicationDbContext : DbContext
                 .WithOne(x => x.Mod)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            entity.HasOne(x => x.User)
+            entity.HasOne(x => x.CreatedBy)
                 .WithMany(x => x.Mods);
         });
         

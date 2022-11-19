@@ -31,9 +31,13 @@ export interface Mod {
   modStatus: ModStatus;
   gameName: string;
   description: string;
-  user: User;
+  createdBy: User;
   rating: number;
   gameId: number;
+  createdAt: string;
+  currentUserRating: number;
+  totalRatings: number;
+
 }
 
 export interface LoginDto {

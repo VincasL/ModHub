@@ -29,15 +29,18 @@ public class ModsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ModDtoGet>))]
     public async Task<ActionResult> GetAllMods(int gameId)
     {
+        int? userId = User == null? null : int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+  
         if (!_gamesHandler.GameExists(gameId))
         {
             return NotFound();
         }
         
-        var result =  await _modsHandler.GetModsByGameId(gameId);
+        var result =  await _modsHandler.GetModsByGameId(gameId, userId);
         return Ok(result);
     }
     
+    [Authorize]
     [HttpGet("user")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ModDtoGet>))]
     public async Task<ActionResult> GetAllUserMods()
@@ -53,8 +56,6 @@ public class ModsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ModDtoGet>))]
     public async Task<ActionResult> GetWaitingForApprovalMods()
     {
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
-
         var result =  await _modsHandler.GetWaitingForApprovalMods();
         return Ok(result);
     }
@@ -65,12 +66,14 @@ public class ModsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<ModDtoGet>> GetMod(int id, int gameId)
     {
+        int? userId = User == null? null : int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
         if (!_modsHandler.ModExists(id, gameId))
         {
             return NotFound();
         }
 
-        var result = await _modsHandler.GetMod(id);
+        var result = await _modsHandler.GetMod(id, userId);
 
         return result;
     }
@@ -133,6 +136,24 @@ public class ModsController : ControllerBase
         
         var result = await _modsHandler.ChangeModStatus(modId, modChangeStatusDto);
         return Ok(result);
+    }
+    
+    [Authorize]
+    [HttpPut("{modId}/modRating")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModDtoGet))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ChangeModRating(int gameId, int modId, [FromBody] int rating)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        if (!_modsHandler.ModExists(modId))
+        {
+            return NotFound();
+        }
+        
+        await _modsHandler.ChangeModRating(modId, userId, rating);
+        return Ok();
     }
     
     

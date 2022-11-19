@@ -33,16 +33,21 @@ public class ModsHandler
         return modToReturn;
     }
     
-    public async Task<ModDtoGet> GetMod(int id)
+    public async Task<ModDtoGet> GetMod(int id, int? userId)
     {
         var mod = await _context.Mods
-            .Include(x=> x.User)
+            .Include(x=> x.CreatedBy)
             .Include(x => x.Game)
             .FirstAsync(x => x.Id == id);
         
         mod.Rating = _context.ModRatings.Any(rating => rating.ModId == mod.Id)
             ? _context.ModRatings.Where(rating => rating.ModId == mod.Id).Average(r => r.Rating)
             : 0;
+
+        mod.CurrentUserRating = userId != null?
+            _context.ModRatings.FirstOrDefault(rating => rating.ModId == mod.Id && rating.UserId == userId)?.Rating : null;
+
+        mod.TotalRatings = _context.ModRatings.Count(rating => rating.ModId == mod.Id);
         
         var modDto = _mapper.Map<Mod, ModDtoGet>(mod);
         return modDto;
@@ -51,7 +56,7 @@ public class ModsHandler
     public async Task<IEnumerable<ModDtoGet>> GetAllMods()
     {
         var mods = await _context.Mods.Where(x => x.ModStatus != ModStatus.Deleted)
-            .Include(x=> x.User)
+            .Include(x=> x.CreatedBy)
             .ToListAsync();
         
         foreach (var mod in mods)
@@ -65,11 +70,11 @@ public class ModsHandler
     
 
     
-    public async Task<IEnumerable<ModDtoGet>> GetModsByGameId(int id)
+    public async Task<IEnumerable<ModDtoGet>> GetModsByGameId(int id, int? userId)
     {
         var mods = await _context.Mods
             .Include(x=> x.Game)
-            .Include(x => x.User)
+            .Include(x => x.CreatedBy)
             .Where(x => x.ModStatus != ModStatus.Deleted && x.GameId == id)
             .ToListAsync();
 
@@ -78,6 +83,11 @@ public class ModsHandler
             mod.Rating = _context.ModRatings.Any(rating => rating.ModId == mod.Id)
                 ? _context.ModRatings.Where(rating => rating.ModId == mod.Id).Average(r => r.Rating)
                 : 0;
+
+            mod.CurrentUserRating =
+                _context.ModRatings.FirstOrDefault(rating => rating.ModId == mod.Id && rating.UserId == userId)?.Rating;
+
+            mod.TotalRatings = _context.ModRatings.Count(rating => rating.ModId == mod.Id);
         }
         
         var modsDto = _mapper.Map<IEnumerable<Mod>, IEnumerable<ModDtoGet>>(mods);
@@ -88,8 +98,8 @@ public class ModsHandler
     {
         var mods = await _context.Mods
             .Include(x=> x.Game)
-            .Include(x => x.User)
-            .Where(x => x.ModStatus != ModStatus.Deleted && x.User.Id == userId)
+            .Include(x => x.CreatedBy)
+            .Where(x => x.ModStatus != ModStatus.Deleted && x.CreatedBy.Id == userId)
             .ToListAsync();
 
         foreach (var mod in mods)
@@ -136,6 +146,11 @@ public class ModsHandler
         return _context.Mods.Any(x => x.Id == modId && x.ModStatus != ModStatus.Deleted && x.GameId == gameId);
     }
     
+    public bool ModExists(int modId)
+    {
+        return _context.Mods.Any(x => x.Id == modId && x.ModStatus != ModStatus.Deleted);
+    }
+    
     public bool ModBelongsToUserOrUserIsAdmin(int modId, int userId)
     {
         var user = _context.Users.First(x => x.Id == userId);
@@ -163,11 +178,33 @@ public class ModsHandler
     {
         var mods = await _context.Mods
             .Include(x=> x.Game)
-            .Include(x => x.User)
+            .Include(x => x.CreatedBy)
             .Where(x => x.ModStatus == ModStatus.WaitingForApproval)
             .ToListAsync();
 
         var modsDto = _mapper.Map<IEnumerable<Mod>, IEnumerable<ModDtoGet>>(mods);
         return modsDto;
+    }
+
+    public async Task ChangeModRating(int modId, int userId, int rating)
+    {
+        var ratingModel = await _context.ModRatings.FirstOrDefaultAsync( x => x.ModId == modId && x.UserId == userId);
+        if (ratingModel == null)
+        {
+            var newRating = new ModRating
+            {
+                UserId = userId,
+                ModId = modId,
+                Rating = rating
+            };
+            await _context.ModRatings.AddAsync(newRating);
+        }
+        else
+        {
+            _context.Entry(ratingModel).State = EntityState.Modified;
+            ratingModel.Rating = rating;
+        }
+
+        await _context.SaveChangesAsync();
     }
 }

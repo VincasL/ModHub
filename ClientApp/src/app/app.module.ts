@@ -33,6 +33,7 @@ import { ToastComponent } from './modules/toaster/components/toast/toast.compone
 import { ToasterComponent } from './modules/toaster/toaster.component';
 import { ModSubmissionsComponent } from './components/mod-submissions/mod-submissions.component';
 import { ModPreviewModalComponent } from './components/mod-submissions/components/mod-preview-modal/mod-preview-modal.component';
+import { StarRatingComponent } from './components/home/common/star-rating/star-rating.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { ModPreviewModalComponent } from './components/mod-submissions/component
     ToastComponent,
     ModSubmissionsComponent,
     ModPreviewModalComponent,
+    StarRatingComponent
   ],
   imports: [
     BrowserModule,

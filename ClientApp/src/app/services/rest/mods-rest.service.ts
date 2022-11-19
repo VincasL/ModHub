@@ -38,9 +38,16 @@ export class ModsRestService {
     return this.httpClient.put<Mod>(`${this.baseUrl}/${gameId}/mods/${modId}/modStatus`, {modStatus})
   }
 
+  putModRating(modId: number, newRating: number)
+  {
+    return this.httpClient.put<Mod>(`${this.baseUrl}/${1}/mods/${modId}/modRating`, newRating)
+  }
+
   deleteMod(mod: Mod) {
     return this.httpClient.delete<void>(`${this.baseUrl}/${mod.gameId}/mods/${mod.id}`)
   }
+
+
 
   constructor(private readonly httpClient: HttpClient) {}
 

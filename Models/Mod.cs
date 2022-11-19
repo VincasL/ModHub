@@ -17,8 +17,10 @@ public class Mod : BaseModel
     public int GameId { get; set; }
     
     [ForeignKey("UserId")]
-    public virtual User User { get; set; }
+    public virtual User CreatedBy { get; set; }
     public int UserId { get; set; }
+    
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
     
     [ForeignKey("RatingId")]
     public virtual double Rating { get; set; }
@@ -31,4 +33,7 @@ public class Mod : BaseModel
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-1TdKSOZKyiSG-APZM5nO9-p5clXCmeUcNQ&usqp=CAU";
 
     [NotMapped] public string? GameName => Game?.Name;
+    [NotMapped] public int? CurrentUserRating { get; set; }
+    [NotMapped] public int TotalRatings { get; set; }
+
 }

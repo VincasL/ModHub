@@ -27,11 +27,5 @@ public class MappingProfile : Profile {
         CreateMap<CommentDtoGet, Comment>();
         CreateMap<CommentDtoPost, Comment>();
         CreateMap<CommentDtoPut, Comment>();
-        
-        CreateMap<ModRating, RatingDtoGet>();
-        CreateMap<RatingDtoGet, ModRating>();
-        CreateMap<RatingDtoPost, ModRating>();
-        CreateMap<RatingDtoPut, ModRating>();
-
     }
 }

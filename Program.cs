@@ -64,7 +64,6 @@ builder.Services.AddTransient<ModsHandler>();
 builder.Services.AddTransient<GamesHandler>();
 builder.Services.AddTransient<CommentsHandler>();
 builder.Services.AddTransient<UsersHandler>();
-builder.Services.AddTransient<RatingsHandler>();
 builder.Services.AddTransient<AuthHandler>();
 builder.Services.AddTransient<ImagesHandler>();
 
