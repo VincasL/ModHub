@@ -63,12 +63,33 @@ public class ModsHandler
         return modsDto;
     }
     
+
+    
     public async Task<IEnumerable<ModDtoGet>> GetModsByGameId(int id)
     {
         var mods = await _context.Mods
             .Include(x=> x.Game)
             .Include(x => x.User)
             .Where(x => x.ModStatus != ModStatus.Deleted && x.GameId == id)
+            .ToListAsync();
+
+        foreach (var mod in mods)
+        {
+            mod.Rating = _context.ModRatings.Any(rating => rating.ModId == mod.Id)
+                ? _context.ModRatings.Where(rating => rating.ModId == mod.Id).Average(r => r.Rating)
+                : 0;
+        }
+        
+        var modsDto = _mapper.Map<IEnumerable<Mod>, IEnumerable<ModDtoGet>>(mods);
+        return modsDto;
+    }
+    
+    public async Task<object?> GetModsByUserId(int userId)
+    {
+        var mods = await _context.Mods
+            .Include(x=> x.Game)
+            .Include(x => x.User)
+            .Where(x => x.ModStatus != ModStatus.Deleted && x.User.Id == userId)
             .ToListAsync();
 
         foreach (var mod in mods)
@@ -136,4 +157,6 @@ public class ModsHandler
         var modToReturn = _mapper.Map<Mod, ModDtoGet>(mod);
         return modToReturn;
     }
+
+
 }

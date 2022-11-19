@@ -37,6 +37,16 @@ public class ModsController : ControllerBase
         var result =  await _modsHandler.GetModsByGameId(gameId);
         return Ok(result);
     }
+    
+    [HttpGet("user")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ModDtoGet>))]
+    public async Task<ActionResult> GetAllUserMods(int gameId)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        var result =  await _modsHandler.GetModsByUserId(userId);
+        return Ok(result);
+    }
 
     
     [HttpGet("{id}")]

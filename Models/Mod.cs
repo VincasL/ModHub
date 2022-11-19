@@ -13,7 +13,7 @@ public class Mod : BaseModel
     public string Name { get; set; }
     
     [ForeignKey("GameId")]
-    public virtual Game Game { get; set; }
+    public virtual Game? Game { get; set; }
     public int GameId { get; set; }
     
     [ForeignKey("UserId")]
@@ -29,4 +29,6 @@ public class Mod : BaseModel
 
     public string? ImageUrl { get; set; } =
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-1TdKSOZKyiSG-APZM5nO9-p5clXCmeUcNQ&usqp=CAU";
+
+    [NotMapped] public string? GameName => Game?.Name;
 }

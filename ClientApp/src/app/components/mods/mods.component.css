@@ -1,0 +1,15 @@
+.table-responsive {
+  overflow-x: visible;
+}
+
+.view{
+  color: blue;
+}
+
+.edit{
+  color: green;
+}
+
+.delete{
+  color: red;
+}

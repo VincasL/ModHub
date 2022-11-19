@@ -1,0 +1,56 @@
+<div class="px-0">
+  <div class="table-responsive">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-8">
+            <h2>Your uploaded mods</h2>
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Game</th>
+            <th>Mod Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let mod of mods$ | async">
+            <td>{{ mod.name }}</td>
+            <td>{{ mod.gameName }}</td>
+            <td>{{ modStatusToDescription(mod.modStatus) }}</td>
+            <td>
+              <a
+                href="#"
+                (click)="onActionClick(mod, ActionType.View)"
+                class="view p-2"
+                title="View"
+                data-toggle="tooltip"
+                ><i class="material-icons">&#xE417;</i></a
+              >
+              <a
+                href="#"
+                (click)="onActionClick(mod, ActionType.Edit)"
+                class="edit p-2"
+                title="Edit"
+                data-toggle="tooltip"
+                ><i class="material-icons">&#xE254;</i></a
+              >
+              <a
+                href="#"
+                (click)="onActionClick(mod, ActionType.Delete)"
+                class="delete p-2"
+                title="Delete"
+                data-toggle="tooltip"
+                ><i class="material-icons">&#xE872;</i></a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

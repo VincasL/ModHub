@@ -1,32 +1,7 @@
 <div class="login-form d-flex w-100 mx-auto mt-1">
-  <form class="w-100" [formGroup]="uploadModForm" (ngSubmit)="onSubmit()">
+  <form class="w-100" [formGroup]="editModForm" (ngSubmit)="onSubmit()">
     <div
-      *ngIf="this.uploadModForm.get('gameId') as control"
-      class="form-outline mb-4"
-    >
-      <label class="form-label" for="name">Game</label>
-
-      <ngx-select-dropdown
-        formControlName="gameId"
-        [multiple]="false"
-        [options]="dropdownOptions$ | async"
-        [required]="true"
-      ></ngx-select-dropdown>
-      <div
-        *ngIf="control.invalid && (control.dirty || control.touched)"
-        class="alert-danger"
-      >
-        <div *ngIf="control.errors?.['required']" class="text-danger">
-          Game is required.
-        </div>
-        <div *ngIf="control.errors?.['minlength']" class="text-danger">
-          Name should be at least 6 characters
-        </div>
-      </div>
-    </div>
-
-    <div
-      *ngIf="this.uploadModForm.get('name') as control"
+      *ngIf="this.editModForm.get('name') as control"
       class="form-outline mb-4"
     >
       <label class="form-label" for="name">Name</label>
@@ -45,6 +20,9 @@
         <div *ngIf="control.errors?.['required']" class="text-danger">
           Name is required.
         </div>
+        <div *ngIf="control.errors?.['minlength']" class="text-danger">
+          Name should be at least 6 characters
+        </div>
       </div>
     </div>
 
@@ -56,17 +34,6 @@
         id="imageUrl"
         class="form-control"
         formControlName="imageUrl"
-      />
-    </div>
-
-    <div class="form-outline mb-4">
-      <label class="form-label" for="downloadLink">File</label>
-
-      <input
-        type="email"
-        id="downloadLink"
-        class="form-control"
-        formControlName="downloadLink"
       />
     </div>
 

@@ -32,4 +32,9 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['upload']);
     return false;
   }
+
+  onMyUploadsClick() {
+    this.router.navigate(['mods']);
+    return false;
+  }
 }

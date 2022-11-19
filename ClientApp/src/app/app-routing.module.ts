@@ -6,6 +6,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ModComponent } from './components/mod/mod.component';
 import { LoginComponent } from './components/login/login.component';
 import { UploadModComponent } from './components/upload-mod/upload-mod.component';
+import { ModsComponent } from './components/mods/mods.component';
+import { ModEditComponent } from './components/mods/components/mod-edit/mod-edit.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -14,6 +16,8 @@ const routes: Routes = [
   { path: 'game/:gameId/mod/:modId', component: ModComponent },
   { path: 'login', component: LoginComponent },
   { path: 'upload', component: UploadModComponent },
+  { path: 'mods', component: ModsComponent },
+  { path: 'game/:gameId/mod/:modId/edit', component: ModEditComponent },
   { path: '**', component: NotFoundComponent },
 ];
 

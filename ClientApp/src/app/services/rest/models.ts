@@ -1,3 +1,5 @@
+import {ModStatus} from "../../shared/enums/mod-status";
+
 export interface Game {
   id: number;
   name: string;
@@ -27,17 +29,11 @@ export interface Mod {
   downloadLink: string;
   imageUrl: string;
   modStatus: ModStatus;
+  gameName: string;
   description: string;
   user: User;
   rating: number;
   gameId: number;
-}
-
-export enum ModStatus {
-  WaitingForApproval,
-  Approved,
-  Declined,
-  Deleted,
 }
 
 export interface LoginDto {
