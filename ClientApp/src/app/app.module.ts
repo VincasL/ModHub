@@ -21,6 +21,9 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
+import { UploadModComponent } from './components/upload-mod/upload-mod.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import {SelectDropDownModule} from "ngx-select-dropdown";
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
     ModComponent,
     HeaderComponent,
     LoginComponent,
+    UploadModComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +50,8 @@ import { TokenInterceptor } from './shared/interceptors/token.interceptor';
     NgxNavbarModule,
     CollapseModule,
     ReactiveFormsModule,
+    NgxDropzoneModule,
+    SelectDropDownModule,
   ],
   providers: [
     {

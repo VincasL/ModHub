@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/shared/auth.service';
 import {Router} from "@angular/router";
+import { Role } from 'src/app/services/rest/models';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,10 @@ import {Router} from "@angular/router";
 })
 export class HeaderComponent implements OnInit {
   constructor(readonly authService: AuthService, private readonly router: Router) {}
+
+  isLoggedIn$ = this.authService.isLoggedIn$;
+  role$ = this.authService.isLoggedIn$;
+  Role = Role;
 
   ngOnInit(): void {}
 
@@ -20,6 +25,11 @@ export class HeaderComponent implements OnInit {
   onLogoutClick() {
     this.authService.logout();
     this.router.navigate(['']);
+    return false;
+  }
+
+  onUploadModClick() {
+    this.router.navigate(['upload']);
     return false;
   }
 }

@@ -17,5 +17,9 @@ export class ModsRestService {
     return this.httpClient.get<Mod>(`${this.baseUrl}/${gameId}/mods/${modId}`);
   }
 
+  postMod(gameId: number, mod: Mod): Observable<Mod>{
+    return this.httpClient.post<Mod>(`${this.baseUrl}/${gameId}/mods`, mod)
+  }
+
   constructor(private readonly httpClient: HttpClient) {}
 }

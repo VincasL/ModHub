@@ -1,0 +1,88 @@
+<div class="login-form d-flex w-100 mx-auto mt-1">
+  <form class="w-100" [formGroup]="uploadModForm" (ngSubmit)="onSubmit()">
+    <div
+      *ngIf="this.uploadModForm.get('gameId') as control"
+      class="form-outline mb-4"
+    >
+      <label class="form-label" for="name">Game</label>
+
+      <ngx-select-dropdown
+        formControlName="gameId"
+        [multiple]="false"
+        [options]="dropdownOptions$ | async"
+        [required]="true"
+      ></ngx-select-dropdown>
+      <div
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+        class="alert-danger"
+      >
+        <div *ngIf="control.errors?.['required']" class="text-danger">
+          Game is required.
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="this.uploadModForm.get('name') as control"
+      class="form-outline mb-4"
+    >
+      <label class="form-label" for="name">Name</label>
+
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        formControlName="name"
+      />
+
+      <div
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+        class="alert-danger"
+      >
+        <div *ngIf="control.errors?.['required']" class="text-danger">
+          Name is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="form-outline mb-4">
+      <label class="form-label" for="imageUrl">Image</label>
+
+      <input
+        type="text"
+        id="imageUrl"
+        class="form-control"
+        formControlName="imageUrl"
+      />
+    </div>
+
+    <div class="form-outline mb-4">
+      <label class="form-label" for="downloadLink">File</label>
+
+      <input
+        type="email"
+        id="downloadLink"
+        class="form-control"
+        formControlName="downloadLink"
+      />
+    </div>
+
+    <div class="form-outline mb-4">
+      <label class="form-label" for="description">Description</label>
+
+      <input
+        type="email"
+        id="description"
+        class="form-control"
+        formControlName="description"
+      />
+    </div>
+
+    <!-- Submit button -->
+    <div class="w-100 text-center">
+      <button type="submit" class="btn btn-primary btn-block mb-4">
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

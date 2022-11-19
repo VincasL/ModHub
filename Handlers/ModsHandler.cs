@@ -11,11 +11,13 @@ public class ModsHandler
 {
     private readonly ApplicationDbContext _context;
     private readonly IMapper _mapper;
+    private readonly ImagesHandler _imagesHandler;
     
-    public ModsHandler(ApplicationDbContext context, IMapper mapper)
+    public ModsHandler(ApplicationDbContext context, IMapper mapper, ImagesHandler imagesHandler)
     {
         _context = context;
         _mapper = mapper;
+        _imagesHandler = imagesHandler;
     }
 
 

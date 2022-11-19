@@ -66,8 +66,7 @@ builder.Services.AddTransient<CommentsHandler>();
 builder.Services.AddTransient<UsersHandler>();
 builder.Services.AddTransient<RatingsHandler>();
 builder.Services.AddTransient<AuthHandler>();
-
-
+builder.Services.AddTransient<ImagesHandler>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
