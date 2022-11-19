@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ModsRestService } from '../../services/rest/mods-rest.service';
-import { GamesRestService } from '../../services/rest/games-rest.service';
-import { map, Observable } from 'rxjs';
-import { SelectOption } from '../../shared/interfaces';
-import { Mod } from '../../services/rest/models';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import {ModsRestService} from '../../services/rest/mods-rest.service';
+import {GamesRestService} from '../../services/rest/games-rest.service';
+import {map, Observable} from 'rxjs';
+import {SelectOption} from '../../shared/interfaces';
+import {Mod} from '../../services/rest/models';
 
 @Component({
   selector: 'app-upload-mod',

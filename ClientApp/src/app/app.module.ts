@@ -23,12 +23,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TokenInterceptor } from './shared/interceptors/token.interceptor';
 import { UploadModComponent } from './components/upload-mod/upload-mod.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import {SelectDropDownModule} from "ngx-select-dropdown";
+import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { ModsComponent } from './components/mods/mods.component';
 import { ModListDashboardItemComponent } from './components/mods/components/mod-list-dashboard-item/mod-list-dashboard-item.component';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { ModEditComponent } from './components/mods/components/mod-edit/mod-edit.component';
+import { ToasterComponent } from './components/toaster/toaster.component';
+import { ToastComponent } from './components/toaster/components/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { ModEditComponent } from './components/mods/components/mod-edit/mod-edit
     ModListDashboardItemComponent,
     ConfirmModalComponent,
     ModEditComponent,
+    ToasterComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,7 +65,7 @@ import { ModEditComponent } from './components/mods/components/mod-edit/mod-edit
     ReactiveFormsModule,
     NgxDropzoneModule,
     SelectDropDownModule,
-    MdbModalModule
+    MdbModalModule,
   ],
   providers: [
     {
