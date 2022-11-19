@@ -29,8 +29,8 @@ import { ModListDashboardItemComponent } from './components/mods/components/mod-
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
 import { MdbModalModule } from 'mdb-angular-ui-kit/modal';
 import { ModEditComponent } from './components/mods/components/mod-edit/mod-edit.component';
-import { ToasterComponent } from './components/toaster/toaster.component';
-import { ToastComponent } from './components/toaster/components/toast/toast.component';
+import { ToastComponent } from './modules/toaster/components/toast/toast.component';
+import { ToasterComponent } from './modules/toaster/toaster.component';
 
 @NgModule({
   declarations: [
