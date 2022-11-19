@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ModHub.DTO;
+using ModHub.DTO.User;
 using ModHub.Models;
 
 namespace ModHub.Handlers;

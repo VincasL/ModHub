@@ -38,14 +38,18 @@ public class CommentsHandler
 
     public async Task<IEnumerable<CommentDtoGet>> GetAllComments()
     {
-        var comments = await _context.Comments.ToListAsync();
+        var comments = await _context.Comments.Include(x => x.CreatedBy).ToListAsync();
         var commentsDto = _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentDtoGet>>(comments);
         return commentsDto;
     }
 
-    public async Task<IEnumerable<CommentDtoGet>> GetCommentsByModId(int id)
+    public async Task<IEnumerable<CommentDtoGet>> GetCommentsByModId(int id, int? userId)
     {
-        var comments = await _context.Comments.Where(x => x.ModId == id).ToListAsync();
+        var comments = await _context.Comments
+            .Include(x => x.CreatedBy)
+            .Where(x => x.ModId == id).ToListAsync();
+        
+        comments.ForEach(x => x.CanEdit = x.UserId == userId);
         var commentsDto = _mapper.Map<IEnumerable<Comment>, IEnumerable<CommentDtoGet>>(comments);
         return commentsDto;
     }

@@ -40,12 +40,14 @@ public class CommentsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CommentDtoGet>))]
     public async Task<ActionResult<CommentDtoGet>> GetAllComments(int gameId, int modId)
     {
+        int? userId = User == null? null : int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        
         if(!_modsHandler.ModExists(modId, gameId))
         {
             return NotFound();
         }
 
-        var result = await _commentsHandler.GetCommentsByModId(modId);
+        var result = await _commentsHandler.GetCommentsByModId(modId, userId);
 
         return Ok(result);
     }

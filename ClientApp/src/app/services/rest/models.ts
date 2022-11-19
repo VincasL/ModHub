@@ -1,4 +1,4 @@
-import {ModStatus} from "../../shared/enums/mod-status";
+import { ModStatus } from '../../shared/enums/mod-status';
 
 export interface Game {
   id: number;
@@ -8,10 +8,10 @@ export interface Game {
 }
 
 export enum Role {
-  Guest= "Guest",
-  User = "User",
-  Moderator = "Moderator",
-  Admin = "Admin"
+  Guest = 'Guest',
+  User = 'User',
+  Moderator = 'Moderator',
+  Admin = 'Admin',
 }
 
 export interface User {
@@ -19,6 +19,7 @@ export interface User {
   email: string;
   username: string;
   role: Role;
+  imageUrl: string;
 }
 
 export interface Mod {
@@ -37,7 +38,17 @@ export interface Mod {
   createdAt: string;
   currentUserRating: number;
   totalRatings: number;
+}
 
+export interface Comment {
+  id: number;
+  text: string;
+  userId: number;
+  modId: number;
+  dateStamp: string;
+  createdBy: User;
+  canEdit: boolean;
+  isBeingEdited: boolean;
 }
 
 export interface LoginDto {

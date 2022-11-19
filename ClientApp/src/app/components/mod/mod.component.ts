@@ -1,9 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {BehaviorSubject, combineLatest, map, Observable, switchMap, tap} from 'rxjs';
-import {Game, Mod} from '../../services/rest/models';
+import {
+  BehaviorSubject,
+  combineLatest,
+  first,
+  map,
+  Observable,
+  switchMap,
+  tap,
+} from 'rxjs';
+import { Mod } from '../../services/rest/models';
 import { ActivatedRoute } from '@angular/router';
 import { ModsRestService } from '../../services/rest/mods-rest.service';
-import {mod} from "ngx-bootstrap/chronos/utils";
 
 @Component({
   selector: 'app-mod',
@@ -19,14 +26,20 @@ export class ModComponent implements OnInit {
   private refreshModSubject = new BehaviorSubject<void>(undefined);
   refreshMod$ = this.refreshModSubject.asObservable();
 
-  mod$: Observable<Mod> = combineLatest([this.route.params, this.refreshMod$]).pipe(
-    map(([params]) => {
+  routeParams$ = this.route.params.pipe(
+    map((params) => {
       return {
         gameId: params['gameId'] as number,
         modId: params['modId'] as number,
       };
-    }),
-    switchMap((params) =>
+    })
+  );
+
+  mod$: Observable<Mod> = combineLatest([
+    this.routeParams$,
+    this.refreshMod$,
+  ]).pipe(
+    switchMap(([params]) =>
       this.modsRestService.getMod(params.gameId, params.modId)
     )
   );
@@ -34,12 +47,14 @@ export class ModComponent implements OnInit {
   ngOnInit(): void {}
 
   onModRatingChange(rating: number) {
-    this.mod$.pipe(switchMap((mod) => this.modsRestService.putModRating(mod.id, rating)))
-      .pipe(tap(() => this.refreshModSubject.next()))
+    this.mod$
+      .pipe(
+        first(),
+        switchMap((mod) => this.modsRestService.putModRating(mod.id, rating)),
+        tap(() => this.refreshModSubject.next())
+      )
       .subscribe();
   }
 
-  onDownloadClick() {
-
-  }
+  onDownloadClick() {}
 }

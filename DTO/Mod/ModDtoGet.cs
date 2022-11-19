@@ -1,4 +1,5 @@
-﻿using ModHub.Enums;
+﻿using ModHub.DTO.User;
+using ModHub.Enums;
 
 namespace ModHub.DTO;
 

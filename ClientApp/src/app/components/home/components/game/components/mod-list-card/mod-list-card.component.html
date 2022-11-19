@@ -2,17 +2,40 @@
   <div class="row">
     <div class="col-md-6 col-lg-4">
       <a href="" (click)="onModClick(mod)">
-        <img class="card-img" [src]="mod.imageUrl" alt="">
+        <img class="card-img" [src]="mod.imageUrl" alt="" />
       </a>
     </div>
     <div class="col-md-6 col-lg-8">
       <div class="card-body">
-        <h4 class="card-text">{{mod.name}}</h4>
-        <p class="card-text m-0"><i class="material-icons">person</i>Uploaded by: {{mod.createdBy.username}}</p>
-        <p class="card-text m-0" ><i class="material-icons">file_download</i>Total downloads: {{mod.totalDownloads}}</p>
-        <app-star-rating [mod]="mod" (onValueChange)="onModRatingChange($event)"></app-star-rating>
-        <p class="p-0">{{mod.totalRatings}} votes, {{mod.rating.toFixed(1)}}/5</p>
-        <button (click)="onModClick(mod)">Download</button>
+        <h4 class="card-text">{{ mod.name }}</h4>
+        <p class="card-text d-flex m-0">
+          <i class="material-icons">file_download</i>Uploaded at
+          {{ mod.createdAt | date: "short" }}
+        </p>
+        <p class="card-text m-0">
+          <i class="material-icons">person</i>Uploaded by:
+          {{ mod.createdBy.username }}
+        </p>
+        <p class="card-text m-0">
+          <i class="material-icons">file_download</i>Total downloads:
+          {{ mod.totalDownloads }}
+        </p>
+
+        <app-star-rating
+          [mod]="mod"
+          (onValueChange)="onModRatingChange($event)"
+        ></app-star-rating>
+        <p class="p-0">
+          {{ mod.totalRatings }} votes, {{ mod.rating.toFixed(1) }}/5
+        </p>
+        <div class="d-flex text-center justify-content-start">
+          <button
+            class="d-flex btn btn-primary btn-block p-1 p-md-2"
+            (click)="onModClick(mod)"
+          >
+            <i class="material-icons">download</i>Download
+          </button>
+        </div>
       </div>
     </div>
   </div>

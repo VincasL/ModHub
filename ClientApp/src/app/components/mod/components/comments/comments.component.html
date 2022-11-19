@@ -1,0 +1,83 @@
+<div class="row border-bottom mb-2" *ngFor="let comment of comments$ | async">
+  <div class="col-1 p-1">
+    <img
+      class="card-img rounded-circle"
+      [src]="comment.createdBy.imageUrl"
+      alt=""
+    />
+  </div>
+
+  <div class="col-9 d-flex flex-column">
+    <div class="d-flex">
+      <p class="pe-2 font-italic">
+        <i>{{ comment.createdBy.username }}</i>
+      </p>
+      <div class="text-muted">@ {{ comment.dateStamp | date: "short" }}</div>
+    </div>
+
+    <div *ngIf="!comment.isBeingEdited">{{ comment.text }}</div>
+    <div *ngIf="comment.isBeingEdited">
+      <textarea
+        class="form-control"
+        id="exampleFormControlTextarea1"
+        rows="2"
+        [value]="comment.text"
+        (input)="onCommentTextChange(comment, $event)"
+      ></textarea>
+    </div>
+  </div>
+
+  <div class="col-2 d-flex justify-content-end align-items-center">
+    <ng-container *ngIf="comment.isBeingEdited">
+      <a
+        *ngIf="comment.canEdit"
+        href="#"
+        (click)="onSaveCommentClick(comment)"
+        class="save p-2"
+        title="Save"
+        data-toggle="tooltip"
+        ><i class="material-icons">check_box</i></a
+      >
+    </ng-container>
+    <ng-container *ngIf="!comment.isBeingEdited">
+      <a
+        *ngIf="comment.canEdit"
+        href="#"
+        (click)="onEditClick(comment)"
+        class="edit p-2"
+        title="Edit"
+        data-toggle="tooltip"
+        ><i class="material-icons">&#xE254;</i></a
+      >
+      <a
+        *ngIf="
+          comment.canEdit ||
+          ((authService.role$ | async) ?? 0) >= Role.Moderator
+        "
+        href="#"
+        (click)="onDeleteClick(comment)"
+        class="delete p-2"
+        title="Delete"
+        data-toggle="tooltip"
+        ><i class="material-icons">&#xE872;</i></a
+      >
+    </ng-container>
+  </div>
+</div>
+
+<h2>Leave a comment</h2>
+
+<form [formGroup]="newCommentForm" (ngSubmit)="onNewCommentSubmit()">
+  <textarea
+    class="form-control"
+    id="exampleFormControlTextarea2"
+    rows="2"
+    formControlName="text"
+  ></textarea>
+
+  <div class="d-flex justify-content-center pt-2">
+    <button type="submit" class="btn btn-primary btn-block mb-4 d-flex px-3 align-items-center">
+      <i class="material-icons send-icon pe-1  ">send</i> Submit
+    </button>
+  </div>
+</form>

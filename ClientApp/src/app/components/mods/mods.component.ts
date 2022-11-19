@@ -8,6 +8,7 @@ import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component'
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { GamesRestService } from '../../services/rest/games-rest.service';
 import { modStatusToDescription } from 'src/app/shared/enums/mod-status';
+import {ToastService} from "../../modules/toaster/services/toast.service";
 
 @Component({
   selector: 'app-mods',
@@ -27,7 +28,8 @@ export class ModsComponent implements OnInit {
     private readonly modsRestService: ModsRestService,
     private readonly gamesRestService: GamesRestService,
     private readonly router: Router,
-    private modalService: MdbModalService
+    private modalService: MdbModalService,
+    private readonly toastService: ToastService
   ) {}
 
   mods$: Observable<Mod[]> = this.refreshMods$.pipe(
@@ -63,7 +65,10 @@ export class ModsComponent implements OnInit {
         map((result) => result.success),
         filter(Boolean),
         switchMap(() => this.modsRestService.deleteMod(mod)),
-        tap(() => this.refreshModsSubject.next())
+        tap(() => {
+          this.refreshModsSubject.next();
+          this.toastService.showSuccessToast('Mod deleted successfully');
+        })
       )
       .subscribe();
   }

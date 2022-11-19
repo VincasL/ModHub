@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModHub.DTO;
+using ModHub.DTO.User;
 using ModHub.Handlers;
 
 namespace ModHub.Controllers;

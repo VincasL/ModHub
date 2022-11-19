@@ -1,0 +1,23 @@
+.text-muted{
+  font-size: 0.9rem;
+}
+
+.edit{
+  color: blue;
+}
+
+.delete{
+  color: red;
+}
+
+.save{
+  color: green;
+}
+
+.material-icons{
+  font-size: 2rem ;
+}
+
+.send-icon{
+  font-size: 1.5rem;
+}
