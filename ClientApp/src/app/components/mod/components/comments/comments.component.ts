@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Comment, Role } from 'src/app/services/rest/models';
+import { Comment } from 'src/app/services/rest/models';
 import {
   BehaviorSubject,
   combineLatest,
@@ -18,6 +18,7 @@ import { ConfirmModalComponent } from '../../../confirm-modal/confirm-modal.comp
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { ToastService } from '../../../../modules/toaster/services/toast.service';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { RoleDescription } from '../../../../shared/enums/role';
 
 @Component({
   selector: 'app-comments',
@@ -25,7 +26,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./comments.component.css'],
 })
 export class CommentsComponent implements OnInit {
-  Role = Role;
+  Role = RoleDescription;
   confirmModalRef: MdbModalRef<ConfirmModalComponent> | null = null;
   newCommentForm = this.fb.group({
     text: new FormControl(null, Validators.required),
@@ -64,7 +65,7 @@ export class CommentsComponent implements OnInit {
   ngOnInit(): void {}
 
   onEditClick(comment: Comment) {
-    comment.isBeingEdited = true;
+    comment.isTextBeingEdited = true;
     return false;
   }
 
@@ -98,7 +99,7 @@ export class CommentsComponent implements OnInit {
   }
 
   onSaveCommentClick(comment: Comment) {
-    comment.isBeingEdited = false;
+    comment.isTextBeingEdited = false;
 
     this.routeParams$
       .pipe(

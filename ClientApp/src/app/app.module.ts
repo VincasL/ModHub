@@ -40,6 +40,7 @@ import {HttpErrorInterceptor} from "./shared/interceptors/http-error.interceptor
 import { GamesComponent } from './components/games/games.component';
 import { UsersComponent } from './components/users/users.component';
 import { GameAddEditComponent } from './components/games/components/game-add-edit/game-add-edit.component';
+import { UserComponent } from './components/user/user.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { GameAddEditComponent } from './components/games/components/game-add-edi
     RegisterComponent,
     GamesComponent,
     UsersComponent,
-    GameAddEditComponent
+    GameAddEditComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

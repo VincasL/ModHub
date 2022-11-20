@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { LoginDto, Role } from '../rest/models';
+import { LoginDto } from '../rest/models';
 import { SessionStorageKeys } from '../../shared/enums';
 import { BehaviorSubject, map, tap } from 'rxjs';
 import jwt_decode from 'jwt-decode';
+import { Role, RoleDescription } from '../../shared/enums/role';
 
 interface UserData {
   username: string;
   email: string;
-  role: Role;
+  role: RoleDescription;
 }
 
 @Injectable({
@@ -16,17 +17,15 @@ interface UserData {
 export class AuthService {
   private guestUserData: UserData = {
     email: 'guest',
-    role: Role.Guest,
+    role: RoleDescription.Guest,
     username: 'Guest',
   };
 
   private userDataSubject = new BehaviorSubject<UserData>(this.guestUserData);
 
   userData$ = this.userDataSubject.asObservable();
-  role$ = this.userData$.pipe(
-    map((userData) => userData.role)
-  );
-  isLoggedIn$ = this.role$.pipe(map((role) => role !== Role.Guest));
+  role$ = this.userData$.pipe(map((userData) => userData.role));
+  isLoggedIn$ = this.role$.pipe(map((role) => role !== RoleDescription.Guest));
 
   login(loginDto: LoginDto) {
     const accessToken = loginDto.accessToken;
@@ -70,8 +69,13 @@ export class AuthService {
         username: userDataRaw[
           'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
         ] as string,
-        email: userDataRaw['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'],
-        role: userDataRaw['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+        email:
+          userDataRaw[
+            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'
+          ],
+        role: userDataRaw[
+          'http://schemas.microsoft.com/ws/2008/06/identity/claims/role'
+        ],
       } as UserData;
 
       this.userDataSubject.next(userData);

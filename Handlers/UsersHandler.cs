@@ -16,21 +16,10 @@ public class UsersHandler
         _context = context;
         _mapper = mapper;
     }
-    
-    public async Task<UserDtoGet> AddUser(UserDto userDto)
-    {
-        var user = _mapper.Map<UserDto, User>(userDto);
-        // TODO: use real password
-        user.PasswordHash = "abc";
-        await _context.Users.AddAsync(user);
-        await _context.SaveChangesAsync();
-        var userToReturn = _mapper.Map<User, UserDtoGet>(user);
-        return userToReturn;
-    }
-    
+
     public async Task<IEnumerable<UserDtoGet>> GetAllUsers()
     {
-        var users = await _context.Users.ToListAsync();
+        var users = await _context.Users.Include(x => x.Mods).Where(x => !x.IsDeleted ).ToListAsync();
         var usersDto = _mapper.Map<IEnumerable<User>, IEnumerable<UserDtoGet>>(users);
         return usersDto;
     }
@@ -42,23 +31,16 @@ public class UsersHandler
         return userDto;
     }
     
-    public async Task UpdateUser(int id, UserDto userDto)
+    public async Task UpdateUser(int id, UserDtoPut userDtoPut)
     {
         var user = await _context.Users.FirstAsync( x=> x.Id == id);
         _context.Entry(user).State = EntityState.Modified;
 
-        _mapper.Map(userDto, user);
+        _mapper.Map(userDtoPut, user);
 
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteUser(int id)
-    {
-        var user = await _context.Users.FirstAsync( x=> x.Id == id);
-        _context.Users.Remove(user);
-        await _context.SaveChangesAsync();
-    }
-    
     public async Task SoftDeleteUser(int id)
     {
         var user = await _context.Users.FirstAsync( x=> x.Id == id);
@@ -76,5 +58,15 @@ public class UsersHandler
     public bool UserEmailExists(string email)
     {
         return _context.Users.Any(u => u.Email == email);
+    }
+
+    public async Task UpdateUserRole(int id, UserChangeRoleDto changeRoleDto)
+    {
+        var user = await _context.Users.FirstAsync( x=> x.Id == id);
+        _context.Entry(user).State = EntityState.Modified;
+
+        user.Role = changeRoleDto.Role;
+
+        await _context.SaveChangesAsync();
     }
 }

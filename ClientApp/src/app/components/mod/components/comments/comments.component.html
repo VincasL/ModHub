@@ -15,8 +15,8 @@
       <div class="text-muted">@ {{ comment.dateStamp | date: "short" }}</div>
     </div>
 
-    <div *ngIf="!comment.isBeingEdited">{{ comment.text }}</div>
-    <div *ngIf="comment.isBeingEdited">
+    <div *ngIf="!comment.isTextBeingEdited">{{ comment.text }}</div>
+    <div *ngIf="comment.isTextBeingEdited">
       <textarea
         class="form-control"
         id="exampleFormControlTextarea1"
@@ -28,7 +28,7 @@
   </div>
 
   <div class="col-2 d-flex justify-content-end align-items-center">
-    <ng-container *ngIf="comment.isBeingEdited">
+    <ng-container *ngIf="comment.isTextBeingEdited">
       <a
         *ngIf="comment.canEdit"
         href="#"
@@ -39,7 +39,7 @@
         ><i class="material-icons">check_box</i></a
       >
     </ng-container>
-    <ng-container *ngIf="!comment.isBeingEdited">
+    <ng-container *ngIf="!comment.isTextBeingEdited">
       <a
         *ngIf="comment.canEdit"
         href="#"

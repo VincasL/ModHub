@@ -1,4 +1,5 @@
 import { ModStatus } from '../../shared/enums/mod-status';
+import { Role } from '../../shared/enums/role';
 
 export interface Game {
   id: number;
@@ -11,19 +12,14 @@ export interface Game {
   waitingForApprovalModsCount: number;
 }
 
-export enum Role {
-  Guest = 'Guest',
-  User = 'User',
-  Moderator = 'Moderator',
-  Admin = 'Admin',
-}
-
 export interface User {
   id: number;
   email: string;
   username: string;
   role: Role;
   imageUrl: string;
+  uploadedModsCount: number;
+  isRoleBeingEdited: boolean;
 }
 
 export interface Mod {
@@ -52,7 +48,7 @@ export interface Comment {
   dateStamp: string;
   createdBy: User;
   canEdit: boolean;
-  isBeingEdited: boolean;
+  isTextBeingEdited: boolean;
 }
 
 export interface LoginDto {

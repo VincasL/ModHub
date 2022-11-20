@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/shared/auth.service';
 import {Router} from "@angular/router";
-import { Role } from 'src/app/services/rest/models';
+import {RoleDescription} from "../../shared/enums/role";
 
 @Component({
   selector: 'app-header',
@@ -10,7 +10,7 @@ import { Role } from 'src/app/services/rest/models';
 })
 export class HeaderComponent implements OnInit {
   constructor(readonly authService: AuthService, private readonly router: Router) {}
-  Role = Role;
+  Role = RoleDescription;
 
   ngOnInit(): void {}
 

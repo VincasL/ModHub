@@ -22,7 +22,7 @@ public class MappingProfile : Profile {
         
         CreateMap<User, UserDtoGet>();
         CreateMap<UserDtoGet, User>();
-        CreateMap<UserDto, User>();
+        CreateMap<UserDtoPut, User>();
         CreateMap<UserRegisterDto, User>();
         
         CreateMap<Comment, CommentDtoGet>();

@@ -9,5 +9,6 @@ public class UserDtoGet
     public string Username { get; set; }
     public Role Role { get; set; }
     public string? ImageUrl { get; set; }
+    public int UploadedModsCount { get; set; }
 
 }

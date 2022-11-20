@@ -2,18 +2,6 @@
   overflow-x: visible;
 }
 
-.view{
-  color: blue;
-}
-
-.edit{
-  color: green;
-}
-
-.delete{
-  color: red;
-}
-
 .material-icons{
   font-size: 2rem ;
 }

@@ -1,1 +1,86 @@
-<p>users works!</p>
+<h1>Users</h1>
+
+<div class="px-0">
+  <div class="table-responsive">
+    <div class="table-wrapper">
+      <table class="table table-striped table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Uploaded mods count</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users$ | async">
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.uploadedModsCount }}</td>
+
+            <td>
+              <ng-container *ngIf="!user.isRoleBeingEdited">
+                {{ roleToDescription(user.role) }}
+                <a
+                  href="#"
+                  (click)="onActionClick(user, ActionType.ChangeRole)"
+                  class="edit p-2"
+                  title="Edit"
+                  data-toggle="tooltip"
+                  ><i class="material-icons">&#xE254;</i></a
+                >
+              </ng-container>
+              <ng-container *ngIf="user.isRoleBeingEdited" >
+                <div class="row">
+                  <div class="col-10">
+                    <ngx-select-dropdown
+                      class="dropdown-z-index"
+                      [multiple]="false"
+                      [options]="roleDropdownOptions"
+                      [_value]="roleToDescription(user.role)"
+                      (change)="onRoleChange($event, user )"
+
+                    ></ngx-select-dropdown>
+                  </div>
+                  <div class="col-2 m-0 p-0 justify-content-start align-items-center d-flex">
+                    <a
+                      href="#"
+                      (click)="onSaveRoleClick(user)"
+                      class="save "
+                      title="Save"
+                      data-toggle="tooltip"
+                    ><i class="material-icons">check_box</i></a
+                    >
+                  </div>
+
+                </div>
+
+              </ng-container>
+            </td>
+
+            <td>
+              <a
+                href="#"
+                (click)="onActionClick(user, ActionType.View)"
+                class="view p-2"
+                title="View"
+                data-toggle="tooltip"
+                ><i class="material-icons">&#xE417;</i></a
+              >
+
+              <a
+                href="#"
+                (click)="onActionClick(user, ActionType.Delete)"
+                class="delete p-2"
+                title="Delete"
+                data-toggle="tooltip"
+                ><i class="material-icons">&#xE872;</i></a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
