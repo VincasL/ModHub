@@ -6,11 +6,11 @@ export enum SessionStorageKeys {
 export enum ActionType {
   View,
   Edit,
-  Delete
+  Delete,
 }
 
 export enum SubmissionActionType {
   View,
   Approve,
-  Decline
+  Decline,
 }

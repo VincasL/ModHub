@@ -82,7 +82,9 @@ export class GameAddEditComponent implements OnInit {
             ? this.gamesRestService.postGame(formValue)
             : this.gamesRestService.putGame(gameId!, formValue)
         ),
-        tap(() => this.toastService.showSuccessToast('Game saved successfully')),
+        tap(() =>
+          this.toastService.showSuccessToast('Game saved successfully')
+        ),
         tap(() => this.location.back())
       )
       .subscribe();

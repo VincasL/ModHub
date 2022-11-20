@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "./services/shared/auth.service";
+import { AuthService } from './services/shared/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +9,7 @@ import {AuthService} from "./services/shared/auth.service";
 export class AppComponent implements OnInit {
   title = 'ClientApp';
 
-  constructor(private readonly authService: AuthService) {
-  }
+  constructor(private readonly authService: AuthService) {}
 
   ngOnInit(): void {
     this.authService.updateUserData();

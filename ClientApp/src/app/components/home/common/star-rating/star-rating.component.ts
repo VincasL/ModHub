@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {Mod} from "../../../../services/rest/models";
-import {mod} from "ngx-bootstrap/chronos/utils";
+import { Mod } from '../../../../services/rest/models';
+import { mod } from 'ngx-bootstrap/chronos/utils';
 
 @Component({
   selector: 'app-star-rating',

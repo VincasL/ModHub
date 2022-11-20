@@ -12,7 +12,6 @@
         id="username"
         class="form-control"
         formControlName="username"
-
       />
 
       <div
@@ -63,7 +62,10 @@
         formControlName="password"
       />
 
-      <div *ngIf="registerForm.errors?.['passwordsDoNotMatch'] && this.registerForm.get('repeatPassword')?.dirty" class="text-danger" >
+      <div
+        *ngIf="registerForm.errors?.['passwordsDoNotMatch'] && this.registerForm.get('repeatPassword')?.dirty"
+        class="text-danger"
+      >
         Passwords do not match.
       </div>
 

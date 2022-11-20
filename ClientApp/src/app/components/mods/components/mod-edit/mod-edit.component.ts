@@ -67,9 +67,7 @@ export class ModEditComponent implements OnInit {
         switchMap((params) =>
           this.modsRestService.putMod(params.gameId, params.modId, formValue)
         ),
-        tap(() =>
-          this.toastService.showSuccessToast('Mod saved successfully')
-        ),
+        tap(() => this.toastService.showSuccessToast('Mod saved successfully')),
         tap(() => this.location.back())
       )
       .subscribe();

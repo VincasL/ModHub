@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
-import {Mod} from "../../../../services/rest/models";
+import { Mod } from '../../../../services/rest/models';
 
 @Component({
   selector: 'app-mod-preview-modal',

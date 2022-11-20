@@ -1,30 +1,30 @@
 /* component */
 
 .star-rating {
-  display:flex;
+  display: flex;
   flex-direction: row-reverse;
-  font-size:1.5em;
-  justify-content:center;
-  padding:0 .2em;
-  text-align:center;
+  font-size: 1.5em;
+  justify-content: center;
+  padding: 0 0.2em;
+  text-align: center;
   align-self: center;
-  width:5em;
+  width: 5em;
 }
 
 .star-rating input {
-  display:none;
+  display: none;
 }
 
 .star-rating label {
-  color:#ccc;
-  cursor:pointer;
+  color: #ccc;
+  cursor: pointer;
 }
 
 .star-rating :checked ~ label {
-  color:#f90;
+  color: #f90;
 }
 
 .star-rating label:hover,
 .star-rating label:hover ~ label {
-  color:#fc0;
+  color: #fc0;
 }

@@ -24,14 +24,15 @@ export class CommentsRestService {
 
   putComment(gameId: number, modId: number, commentId: number, text: string) {
     return this.httpClient.put<Comment>(
-      `${this.baseUrl}/${gameId}/mods/${modId}/comments/${commentId}`, {text}
+      `${this.baseUrl}/${gameId}/mods/${modId}/comments/${commentId}`,
+      { text }
     );
   }
 
   postComment(gameId: number, modId: number, comment: Comment) {
     return this.httpClient.post<Comment>(
-      `${this.baseUrl}/${gameId}/mods/${modId}/comments`, comment
+      `${this.baseUrl}/${gameId}/mods/${modId}/comments`,
+      comment
     );
   }
-
 }

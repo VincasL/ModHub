@@ -12,7 +12,9 @@ export enum ModStatusDescription {
   Deleted = 'Deleted',
 }
 
-export function modStatusToDescription(modStatus: ModStatus): ModStatusDescription {
+export function modStatusToDescription(
+  modStatus: ModStatus
+): ModStatusDescription {
   switch (modStatus) {
     case ModStatus.WaitingForApproval:
       return ModStatusDescription.WaitingForApproval;

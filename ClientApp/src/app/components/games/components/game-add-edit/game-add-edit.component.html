@@ -23,7 +23,10 @@
       </div>
     </div>
 
-    <div *ngIf="this.form.get('shortName') as control" class="form-outline mb-4">
+    <div
+      *ngIf="this.form.get('shortName') as control"
+      class="form-outline mb-4"
+    >
       <label class="form-label" for="shortName">Short Name</label>
 
       <input
@@ -91,7 +94,8 @@
           Description is required.
         </div>
         <div *ngIf="control.errors?.['minlength'] as error" class="text-danger">
-          Description should be at least {{error?.['requiredLength']}} characters
+          Description should be at least
+          {{error?.['requiredLength']}} characters
         </div>
       </div>
     </div>

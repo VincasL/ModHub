@@ -73,6 +73,6 @@ export class GamesComponent implements OnInit {
   }
 
   onAddGameClick() {
-    this.router.navigate(['games', 'add'])
+    this.router.navigate(['games', 'add']);
   }
 }

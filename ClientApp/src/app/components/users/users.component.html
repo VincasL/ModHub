@@ -31,7 +31,7 @@
                   ><i class="material-icons">&#xE254;</i></a
                 >
               </ng-container>
-              <ng-container *ngIf="user.isRoleBeingEdited" >
+              <ng-container *ngIf="user.isRoleBeingEdited">
                 <div class="row">
                   <div class="col-10">
                     <ngx-select-dropdown
@@ -39,23 +39,22 @@
                       [multiple]="false"
                       [options]="roleDropdownOptions"
                       [_value]="roleToDescription(user.role)"
-                      (change)="onRoleChange($event, user )"
-
+                      (change)="onRoleChange($event, user)"
                     ></ngx-select-dropdown>
                   </div>
-                  <div class="col-2 m-0 p-0 justify-content-start align-items-center d-flex">
+                  <div
+                    class="col-2 m-0 p-0 justify-content-start align-items-center d-flex"
+                  >
                     <a
                       href="#"
                       (click)="onSaveRoleClick(user)"
-                      class="save "
+                      class="save"
                       title="Save"
                       data-toggle="tooltip"
-                    ><i class="material-icons">check_box</i></a
+                      ><i class="material-icons">check_box</i></a
                     >
                   </div>
-
                 </div>
-
               </ng-container>
             </td>
 

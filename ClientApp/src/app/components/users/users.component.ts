@@ -109,7 +109,6 @@ export class UsersComponent implements OnInit {
       )
       .subscribe();
 
-
     return false;
   }
 

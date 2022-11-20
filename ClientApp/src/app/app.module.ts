@@ -36,7 +36,7 @@ import { StarRatingComponent } from './components/home/common/star-rating/star-r
 import { CommentsComponent } from './components/mod/components/comments/comments.component';
 import { CommentTextComponent } from './components/mod/components/comments/comment-text/comment-text.component';
 import { RegisterComponent } from './components/register/register.component';
-import {HttpErrorInterceptor} from "./shared/interceptors/http-error.interceptor";
+import { HttpErrorInterceptor } from './shared/interceptors/http-error.interceptor';
 import { GamesComponent } from './components/games/games.component';
 import { UsersComponent } from './components/users/users.component';
 import { GameAddEditComponent } from './components/games/components/game-add-edit/game-add-edit.component';
@@ -71,7 +71,7 @@ import { UserComponent } from './components/user/user.component';
     GamesComponent,
     UsersComponent,
     GameAddEditComponent,
-    UserComponent
+    UserComponent,
   ],
   imports: [
     BrowserModule,

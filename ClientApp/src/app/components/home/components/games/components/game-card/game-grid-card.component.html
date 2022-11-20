@@ -11,8 +11,12 @@
       <div class="">{{ game.shortName }}</div>
     </div>
     <div class="row">
-      <div class="card-text col"><i class="small material-icons">download</i>{{ game.totalDownloads }}</div>
-      <div class="card-text col"><i class="small material-icons">settings</i>{{ game.modsCount }}</div>
+      <div class="card-text col">
+        <i class="small material-icons">download</i>{{ game.totalDownloads }}
+      </div>
+      <div class="card-text col">
+        <i class="small material-icons">settings</i>{{ game.modsCount }}
+      </div>
     </div>
 
     <a class="stretched-link" (click)="gameClick.emit(game)"></a>

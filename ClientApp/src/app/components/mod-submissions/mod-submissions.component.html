@@ -10,7 +10,7 @@
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody >
+      <tbody>
         <tr *ngFor="let mod of mods$ | async">
           <td>{{ mod.name }}</td>
           <td>{{ mod.gameName }}</td>
@@ -44,8 +44,7 @@
       </tbody>
     </table>
   </div>
-  <div class="text-center" *ngIf="!(mods$ | async)?.length">No mods waiting for approval</div>
-
+  <div class="text-center" *ngIf="!(mods$ | async)?.length">
+    No mods waiting for approval
+  </div>
 </div>
-
-

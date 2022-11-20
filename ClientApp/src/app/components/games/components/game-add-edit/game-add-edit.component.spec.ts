@@ -8,9 +8,8 @@ describe('GameAddEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GameAddEditComponent ]
-    })
-    .compileComponents();
+      declarations: [GameAddEditComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(GameAddEditComponent);
     component = fixture.componentInstance;

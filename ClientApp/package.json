@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "pretty-quick": "pretty-quick",
+    "pretty": "prettier --write \"./**/*.{ts,tsx,html,css}\""
   },
   "private": true,
   "dependencies": {
@@ -28,6 +30,7 @@
     "ngx-bootstrap-navbar": "^14.0.0",
     "ngx-dropzone": "^3.1.0",
     "ngx-select-dropdown": "^3.2.0",
+    "pretty-quick": "^3.1.3",
     "rxjs": "~7.5.0",
     "save": "^2.9.0",
     "tslib": "^2.3.0",

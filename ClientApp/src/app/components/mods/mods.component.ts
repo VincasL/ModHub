@@ -1,14 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModsRestService } from '../../services/rest/mods-rest.service';
-import {BehaviorSubject, filter, map, mapTo, Observable, switchMap, tap} from 'rxjs';
+import {
+  BehaviorSubject,
+  filter,
+  map,
+  mapTo,
+  Observable,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { Mod } from '../../services/rest/models';
 import { ActionType } from '../../shared/enums';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { GamesRestService } from '../../services/rest/games-rest.service';
 import { modStatusToDescription } from 'src/app/shared/enums/mod-status';
-import {ToastService} from "../../modules/toaster/services/toast.service";
+import { ToastService } from '../../modules/toaster/services/toast.service';
 
 @Component({
   selector: 'app-mods',
@@ -57,8 +65,10 @@ export class ModsComponent implements OnInit {
   }
 
   openModal(mod: Mod) {
-    const title = `Are you sure you want to delete ${mod.name}?`
-    this.modalRef = this.modalService.open(ConfirmModalComponent, {data: {title}});
+    const title = `Are you sure you want to delete ${mod.name}?`;
+    this.modalRef = this.modalService.open(ConfirmModalComponent, {
+      data: { title },
+    });
 
     this.modalRef.onClose
       .pipe(

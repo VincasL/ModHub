@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersRestService } from '../../services/rest/users-rest.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap } from 'rxjs';
-import {roleToDescription} from "../../shared/enums/role";
+import { roleToDescription } from '../../shared/enums/role';
 
 @Component({
   selector: 'app-user',
@@ -22,5 +22,5 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  roleToDescription = roleToDescription
+  roleToDescription = roleToDescription;
 }

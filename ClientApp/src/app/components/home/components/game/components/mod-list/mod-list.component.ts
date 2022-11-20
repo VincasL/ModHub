@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {BehaviorSubject, combineLatest, map, Observable, switchMap, tap} from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  map,
+  Observable,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { Mod } from '../../../../../../services/rest/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModsRestService } from '../../../../../../services/rest/mods-rest.service';
@@ -19,7 +26,10 @@ export class ModListComponent implements OnInit {
   private refreshModsSubject = new BehaviorSubject<void>(undefined);
   refreshMods$ = this.refreshModsSubject.asObservable();
 
-  mods$: Observable<Mod[]> = combineLatest([this.route.params, this.refreshMods$]).pipe(
+  mods$: Observable<Mod[]> = combineLatest([
+    this.route.params,
+    this.refreshMods$,
+  ]).pipe(
     map(([params]) => params['gameId']),
     switchMap((gameId) => this.modsRestService.getMods(gameId))
   );

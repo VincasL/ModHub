@@ -13,7 +13,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { GamesComponent } from './components/games/games.component';
 import { UsersComponent } from './components/users/users.component';
 import { GameAddEditComponent } from './components/games/components/game-add-edit/game-add-edit.component';
-import {UserComponent} from "./components/user/user.component";
+import { UserComponent } from './components/user/user.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
