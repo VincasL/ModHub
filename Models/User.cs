@@ -13,6 +13,8 @@ public class User : BaseModel
     public ICollection<Comment> Comments { get; set; }
     public ICollection<ModRating> ModRatings { get; set; }
     public bool IsDeleted { get; set; }
+    
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
 
     public string? ImageUrl { get; set; } =
         "https://staticc.sportskeeda.com/editor/2020/11/b6b38-16042204231804-800.jpg";

@@ -20,6 +20,7 @@ export interface User {
   imageUrl: string;
   uploadedModsCount: number;
   isRoleBeingEdited: boolean;
+  createdAt: string;
 }
 
 export interface Mod {

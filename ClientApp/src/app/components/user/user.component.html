@@ -1,1 +1,30 @@
-<p>user works!</p>
+<div class="card g-0" *ngIf="user$ | async as user">
+  <div class="row justify-content-center pt-3">
+    <div class="rect-img-container profile-img p-0 m-0">
+      <img
+        class="card-img-top rect-img rounded-circle"
+        [src]="user.imageUrl"
+        alt="Card image cap"
+      />
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <h1 class="text-center p-0">{{ user.username }}</h1>
+    </div>
+    <div class="row">
+      <h5 class="card-text text-center">
+        {{ roleToDescription(user.role) }}
+      </h5>
+      <h6 class="card-text text-center">
+        <i class="small material-icons">date_range</i> Joined at:
+        {{ user.createdAt | date: "longDate" }}
+      </h6>
+      <h6 class="card-text text-center">
+        <i class="small material-icons">file_download</i> Uploaded mods count: :
+        {{ user.uploadedModsCount }}
+      </h6>
+    </div>
+  </div>
+</div>

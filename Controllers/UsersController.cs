@@ -29,10 +29,10 @@ public class UsersController : ControllerBase
         return result;
     }
     
-    [HttpGet("id")]
+    [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UserDtoGet))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<UserDtoGet>> GetUser(int id)
+    public async Task<ActionResult<UserDtoGet>> GetUser([FromRoute] int id)
     {
 
         if (!_handler.UserExists(id))

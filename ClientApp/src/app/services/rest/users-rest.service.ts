@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Mod, User } from './models';
-import { HttpClient } from '@angular/common/http';
-import { Role } from '../../shared/enums/role';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {User} from './models';
+import {HttpClient} from '@angular/common/http';
+import {Role} from '../../shared/enums/role';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,10 @@ export class UsersRestService {
     return this.httpClient.get<User[]>(`${this.baseUrl}`);
   }
 
+  getUser(userId: number): Observable<User> {
+    return this.httpClient.get<User>(`${this.baseUrl}/${userId}`);
+  }
+
   deleteUser(user: User) {
     return this.httpClient.delete<void>(`${this.baseUrl}/${user.id}`);
   }
@@ -23,4 +27,6 @@ export class UsersRestService {
   putUserRole(userId: number, role: Role) {
     return this.httpClient.put<void>(`${this.baseUrl}/${userId}/role`, { role });
   }
+
+
 }

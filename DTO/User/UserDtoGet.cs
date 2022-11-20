@@ -10,5 +10,6 @@ public class UserDtoGet
     public Role Role { get; set; }
     public string? ImageUrl { get; set; }
     public int UploadedModsCount { get; set; }
+    public DateTime CreatedAt { get; set; }
 
 }
