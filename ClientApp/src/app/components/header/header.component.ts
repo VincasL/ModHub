@@ -52,4 +52,9 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['users']);
     return false;
   }
+
+  onMyProfileClick() {
+    this.router.navigate(['profile']);
+    return false;
+  }
 }

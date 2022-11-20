@@ -41,6 +41,7 @@ import { GamesComponent } from './components/games/games.component';
 import { UsersComponent } from './components/users/users.component';
 import { GameAddEditComponent } from './components/games/components/game-add-edit/game-add-edit.component';
 import { UserComponent } from './components/user/user.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { UserComponent } from './components/user/user.component';
     UsersComponent,
     GameAddEditComponent,
     UserComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

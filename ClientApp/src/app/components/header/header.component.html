@@ -3,7 +3,7 @@
     role: (authService.role$ | async),
     isLoggedIn: (authService.isLoggedIn$ | async)
   } as user"
-  class="navbar navbar-expand-sm navbar-light bg-light"
+  class="navbar navbar-expand-md navbar-light bg-light"
 >
   <div class="container-fluid">
     <a class="navbar-brand" href="#">ModHub</a>
@@ -88,6 +88,17 @@
             href=""
             (click)="onManageUsersClick()"
             >Users</a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a
+            *ngIf="user.isLoggedIn"
+            class="nav-link active"
+            aria-current="page"
+            href=""
+            (click)="onMyProfileClick()"
+            >My Profile</a
           >
         </li>
       </ul>

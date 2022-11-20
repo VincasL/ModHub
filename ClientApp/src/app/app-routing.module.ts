@@ -14,6 +14,7 @@ import { GamesComponent } from './components/games/games.component';
 import { UsersComponent } from './components/users/users.component';
 import { GameAddEditComponent } from './components/games/components/game-add-edit/game-add-edit.component';
 import { UserComponent } from './components/user/user.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -31,7 +32,7 @@ const routes: Routes = [
   { path: 'submissions', component: ModSubmissionsComponent },
   { path: 'users', component: UsersComponent },
   { path: 'user/:userId', component: UserComponent },
-
+  { path: 'profile', component: ProfileComponent },
   { path: '**', component: NotFoundComponent },
 ];
 

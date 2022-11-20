@@ -1,0 +1,85 @@
+<div class="card" *ngIf="user$ | async as user">
+  <div class="row justify-content-center pt-3 g-0">
+    <div class="rect-img-container profile-img mx-0 m-0">
+      <img
+        class="card-img-top rect-img rounded-circle"
+        [src]="user.imageUrl"
+        alt="Card image cap"
+      />
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="row">
+      <h1 class="text-center p-0">{{ user.username }}</h1>
+    </div>
+    <div class="row">
+      <h5 class="card-text text-center">
+        {{ roleToDescription(user.role) }}
+      </h5>
+      <h6 class="card-text text-center">
+        <i class="small material-icons">date_range</i> Joined at:
+        {{ user.createdAt | date: "longDate" }}
+      </h6>
+      <h6 class="card-text text-center">
+        <i class="small material-icons">file_download</i> Uploaded mods count:
+        {{ user.uploadedModsCount }}
+      </h6>
+    </div>
+  </div>
+</div>
+
+<div class="profile-form d-flex mx-auto mt-2">
+  <form class="w-100" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div *ngIf="this.form.get('username') as control" class="form-outline mb-4">
+      <label class="form-label" for="username">Edit username</label>
+
+      <input
+        type="text"
+        id="username"
+        class="form-control"
+        formControlName="username"
+      />
+
+      <div
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+        class="alert-danger"
+      >
+        <div *ngIf="control.errors?.['required']" class="text-danger">
+          Name is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Email input -->
+    <div *ngIf="this.form.get('email') as control" class="form-outline mb-4">
+      <label class="form-label" for="email">Edit email</label>
+
+      <input
+        type="text"
+        id="email"
+        class="form-control"
+        formControlName="email"
+      />
+
+      <div
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+        class="alert-danger"
+      >
+        <div *ngIf="control.errors?.['required']" class="text-danger">
+          Email is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit button -->
+    <div class="w-100 text-center d-flex justify-content-center pt-2">
+      <button
+        type="submit"
+        class="btn btn-primary btn-block mb-4 d-flex px-3 align-items-center"
+      >
+        <i class="material-icons send-icon pe-1">send</i> Update
+      </button>
+    </div>
+  </form>
+</div>

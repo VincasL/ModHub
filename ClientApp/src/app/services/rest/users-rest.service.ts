@@ -20,6 +20,10 @@ export class UsersRestService {
     return this.httpClient.get<User>(`${this.baseUrl}/${userId}`);
   }
 
+  getCurrentUser(): Observable<User> {
+    return this.httpClient.get<User>(`${this.baseUrl}/profile`);
+  }
+
   deleteUser(user: User) {
     return this.httpClient.delete<void>(`${this.baseUrl}/${user.id}`);
   }
@@ -28,5 +32,9 @@ export class UsersRestService {
     return this.httpClient.put<void>(`${this.baseUrl}/${userId}/role`, {
       role,
     });
+  }
+
+  putCurrentUser(user: User) {
+    return this.httpClient.put<void>(`${this.baseUrl}/profile`, user);
   }
 }
