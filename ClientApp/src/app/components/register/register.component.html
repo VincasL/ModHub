@@ -1,0 +1,133 @@
+<div class="register-form d-flex w-100 mx-auto mt-1">
+  <form class="w-100" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <!-- Username input -->
+    <div
+      *ngIf="this.registerForm.get('username') as control"
+      class="form-outline mb-4"
+    >
+      <label class="form-label" for="username">Username</label>
+
+      <input
+        type="text"
+        id="username"
+        class="form-control"
+        formControlName="username"
+
+      />
+
+      <div
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+        class="alert-danger"
+      >
+        <div *ngIf="control.errors?.['required']" class="text-danger">
+          Name is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Email input -->
+    <div
+      *ngIf="this.registerForm.get('email') as control"
+      class="form-outline mb-4"
+    >
+      <label class="form-label" for="email">Email</label>
+
+      <input
+        type="text"
+        id="email"
+        class="form-control"
+        formControlName="email"
+      />
+
+      <div
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+        class="alert-danger"
+      >
+        <div *ngIf="control.errors?.['required']" class="text-danger">
+          Email is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Password input -->
+    <div
+      *ngIf="this.registerForm.get('password') as control"
+      class="form-outline mb-4"
+    >
+      <label class="form-label" for="password">Password</label>
+
+      <input
+        type="password"
+        id="password"
+        class="form-control"
+        formControlName="password"
+      />
+
+      <div *ngIf="registerForm.errors?.['passwordsDoNotMatch'] && this.registerForm.get('repeatPassword')?.dirty" class="text-danger" >
+        Passwords do not match.
+      </div>
+
+      <div
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+        class="alert-danger"
+      >
+        <div *ngIf="control.errors?.['required']" class="text-danger">
+          Password is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- Repeat Password input -->
+    <div
+      *ngIf="this.registerForm.get('repeatPassword') as control"
+      class="form-outline mb-4"
+    >
+      <label class="form-label" for="repeatPassword">Repeat password</label>
+
+      <input
+        type="password"
+        id="repeatPassword"
+        class="form-control"
+        formControlName="repeatPassword"
+      />
+
+      <div
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+        class="alert-danger"
+      >
+        <div *ngIf="control.errors?.['required']" class="text-danger">
+          Repeat password is required.
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 column grid layout for inline styling -->
+    <div class="mb-4 d-flex justify-content-sm-around flex-sm-row flex-column">
+      <!-- Checkbox -->
+      <div class="form-check align-self-center">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="form2Example31"
+          checked
+        />
+        <label class="form-check-label" for="form2Example31">
+          Remember me
+        </label>
+      </div>
+    </div>
+
+    <!-- Submit button -->
+    <div class="w-100 text-center">
+      <button type="submit" class="btn btn-primary btn-block mb-4">
+        Sign in
+      </button>
+    </div>
+
+    <!-- Register buttons -->
+    <div class="text-center">
+      <p>Already a member? <a href="" (click)="onLoginClick()">Login</a></p>
+    </div>
+  </form>
+</div>

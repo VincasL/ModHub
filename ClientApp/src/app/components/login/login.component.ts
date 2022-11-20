@@ -40,4 +40,9 @@ export class LoginComponent implements OnInit {
       )
       .subscribe();
   }
+
+  onRegisterClick() {
+    this.router.navigate(['register'])
+    return false;
+  }
 }

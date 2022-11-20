@@ -9,6 +9,7 @@ import { UploadModComponent } from './components/upload-mod/upload-mod.component
 import { ModsComponent } from './components/mods/mods.component';
 import { ModEditComponent } from './components/mods/components/mod-edit/mod-edit.component';
 import { ModSubmissionsComponent } from './components/mod-submissions/mod-submissions.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'game/:gameId', component: GameComponent },
   { path: 'game/:gameId/mod/:modId', component: ModComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'upload', component: UploadModComponent },
   { path: 'mods', component: ModsComponent },
   { path: 'game/:gameId/mod/:modId/edit', component: ModEditComponent },

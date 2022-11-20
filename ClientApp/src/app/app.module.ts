@@ -35,6 +35,8 @@ import { ModPreviewModalComponent } from './components/mod-submissions/component
 import { StarRatingComponent } from './components/home/common/star-rating/star-rating.component';
 import { CommentsComponent } from './components/mod/components/comments/comments.component';
 import { CommentTextComponent } from './components/mod/components/comments/comment-text/comment-text.component';
+import { RegisterComponent } from './components/register/register.component';
+import {HttpErrorInterceptor} from "./shared/interceptors/http-error.interceptor";
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import { CommentTextComponent } from './components/mod/components/comments/comme
     ModPreviewModalComponent,
     StarRatingComponent,
     CommentsComponent,
-    CommentTextComponent
+    CommentTextComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -79,6 +82,11 @@ import { CommentTextComponent } from './components/mod/components/comments/comme
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
       multi: true,
     },
   ],

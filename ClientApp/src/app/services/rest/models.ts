@@ -52,11 +52,10 @@ export interface Comment {
 }
 
 export interface LoginDto {
-  name: string;
-  email: string;
-  role: Role;
   accessToken: string;
   refreshToken: string;
 }
 
-export interface RegisterDto {}
+export interface RegisterDto {
+
+}

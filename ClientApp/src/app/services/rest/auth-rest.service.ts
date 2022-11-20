@@ -22,8 +22,8 @@ export class AuthRestService {
     email: string,
     password: string,
     username: string
-  ): Observable<RegisterDto> {
-    return this.httpClient.post<RegisterDto>(`${this.baseUrl}/register`, {
+  ): Observable<LoginDto> {
+    return this.httpClient.post<LoginDto>(`${this.baseUrl}/register`, {
       email,
       password,
       username,
