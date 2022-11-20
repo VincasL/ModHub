@@ -31,6 +31,11 @@ export class GameAddEditComponent implements OnInit {
       Validators.minLength(50),
     ]),
     imageUrl: new FormControl<string>('', Validators.required),
+    shortName: new FormControl<string>('', [
+      Validators.required,
+      Validators.minLength(3),
+      Validators.maxLength(15),
+    ]),
   });
 
   constructor(

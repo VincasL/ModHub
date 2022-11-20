@@ -1,11 +1,12 @@
 <div class="card">
   <div class="row">
-    <div class="p-3 col-12 col-sm-12 col-md-3 col-lg-2 ">
-      <img class="card-img" [src]="game.imageUrl" alt="">
+    <div class="p-3 col-12 col-sm-12 col-md-12 col-lg-4">
+      <img class="card-img" [src]="game.imageUrl" alt="" />
     </div>
-    <div class="col-12 col-sm-12 col-md-9 col-lg-10">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-8">
       <div class="card-body">
-        <p class="card-text">{{game.description}}</p>
+        <h1 class="p-1 ">{{ game.name }}</h1>
+        <div [innerText]="game.description" class="card-text"></div>
       </div>
     </div>
   </div>

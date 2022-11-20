@@ -3,6 +3,7 @@ import { ModStatus } from '../../shared/enums/mod-status';
 export interface Game {
   id: number;
   name: string;
+  shortName: string;
   description: string;
   imageUrl: string;
   modsCount: number;

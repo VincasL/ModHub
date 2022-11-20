@@ -1,7 +1,20 @@
 <div class="card g-0">
-  <img class="card-img-top" [src]="game.imageUrl" alt="Card image cap" />
+  <div class="rect-img-container">
+    <img
+      class="card-img-top rect-img"
+      [src]="game.imageUrl"
+      alt="Card image cap"
+    />
+  </div>
   <div class="card-body">
-    <p class="card-text">{{ game.name }}</p>
+    <div class="row">
+      <div class="">{{ game.shortName }}</div>
+    </div>
+    <div class="row">
+      <div class="card-text col"><i class="small material-icons">download</i>{{ game.totalDownloads }}</div>
+      <div class="card-text col"><i class="small material-icons">settings</i>{{ game.modsCount }}</div>
+    </div>
+
     <a class="stretched-link" (click)="gameClick.emit(game)"></a>
   </div>
 </div>

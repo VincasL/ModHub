@@ -5,48 +5,50 @@
     <div class="table-wrapper">
       <table class="table table-striped table-hover table-bordered">
         <thead>
-        <tr>
-          <th>Name</th>
-          <th>Mods count</th>
-          <th>Waiting for approval mods count</th>
-          <th>Total downloads</th>
-          <th>Actions</th>
-        </tr>
+          <tr>
+            <th>Name</th>
+            <th>Short name</th>
+            <th>Mods count</th>
+            <th>Waiting for approval mods count</th>
+            <th>Total downloads</th>
+            <th>Actions</th>
+          </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let game of games$ | async">
-          <td>{{ game.name }}</td>
-          <td>{{ game.modsCount }}</td>
-          <td>{{ game.waitingForApprovalModsCount }}</td>
-          <td>{{ game.totalDownloads }}</td>
+          <tr *ngFor="let game of games$ | async">
+            <td>{{ game.name }}</td>
+            <td>{{ game.shortName }}</td>
+            <td>{{ game.modsCount }}</td>
+            <td>{{ game.waitingForApprovalModsCount }}</td>
+            <td>{{ game.totalDownloads }}</td>
 
-          <td>
-            <a
-              href="#"
-              (click)="onActionClick(game, ActionType.View)"
-              class="view p-2"
-              title="View"
-              data-toggle="tooltip"
-            ><i class="material-icons">&#xE417;</i></a
-            >
-            <a
-              href="#"
-              (click)="onActionClick(game, ActionType.Edit)"
-              class="edit p-2"
-              title="Edit"
-              data-toggle="tooltip"
-            ><i class="material-icons">&#xE254;</i></a
-            >
-            <a
-              href="#"
-              (click)="onActionClick(game, ActionType.Delete)"
-              class="delete p-2"
-              title="Delete"
-              data-toggle="tooltip"
-            ><i class="material-icons">&#xE872;</i></a
-            >
-          </td>
-        </tr>
+            <td>
+              <a
+                href="#"
+                (click)="onActionClick(game, ActionType.View)"
+                class="view p-2"
+                title="View"
+                data-toggle="tooltip"
+                ><i class="material-icons">&#xE417;</i></a
+              >
+              <a
+                href="#"
+                (click)="onActionClick(game, ActionType.Edit)"
+                class="edit p-2"
+                title="Edit"
+                data-toggle="tooltip"
+                ><i class="material-icons">&#xE254;</i></a
+              >
+              <a
+                href="#"
+                (click)="onActionClick(game, ActionType.Delete)"
+                class="delete p-2"
+                title="Delete"
+                data-toggle="tooltip"
+                ><i class="material-icons">&#xE872;</i></a
+              >
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -54,8 +56,10 @@
 </div>
 <div class="text-center" *ngIf="(games$ | async)?.length === 0">No games</div>
 <div class="justify-content-center d-flex">
-  <button class="btn btn-primary btn-block mb-4 d-flex px-3 align-items-center" (click)="onAddGameClick()">
-    <i class="material-icons send-icon pe-1  ">add</i> Add a new game
+  <button
+    class="btn btn-primary btn-block mb-4 d-flex px-3 align-items-center"
+    (click)="onAddGameClick()"
+  >
+    <i class="material-icons send-icon pe-1">add</i> Add a new game
   </button>
 </div>
-
