@@ -10,10 +10,16 @@ import { ModsComponent } from './components/mods/mods.component';
 import { ModEditComponent } from './components/mods/components/mod-edit/mod-edit.component';
 import { ModSubmissionsComponent } from './components/mod-submissions/mod-submissions.component';
 import { RegisterComponent } from './components/register/register.component';
+import { GamesComponent } from './components/games/games.component';
+import { UsersComponent } from './components/users/users.component';
+import { GameAddEditComponent } from './components/games/components/game-add-edit/game-add-edit.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: '', pathMatch: 'full', component: HomeComponent },
+  { path: 'games', component: GamesComponent },
+  { path: 'games/add', component: GameAddEditComponent },
+  { path: 'games/edit/:gameId', component: GameAddEditComponent },
   { path: 'game/:gameId', component: GameComponent },
   { path: 'game/:gameId/mod/:modId', component: ModComponent },
   { path: 'login', component: LoginComponent },
@@ -22,6 +28,7 @@ const routes: Routes = [
   { path: 'mods', component: ModsComponent },
   { path: 'game/:gameId/mod/:modId/edit', component: ModEditComponent },
   { path: 'submissions', component: ModSubmissionsComponent },
+  { path: 'users', component: UsersComponent },
   { path: '**', component: NotFoundComponent },
 ];
 

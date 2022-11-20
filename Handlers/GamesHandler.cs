@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ModHub.DTO;
+using ModHub.DTO.Game;
 using ModHub.Models;
 
 namespace ModHub.Handlers;
@@ -28,7 +29,7 @@ public class GamesHandler
     
     public async Task<IEnumerable<GameDtoGet>> GetAllGames()
     {
-        var games = await _context.Games.Where(x => !x.IsDeleted).ToListAsync();
+        var games = await _context.Games.Include(x => x.Mods).Where(x => !x.IsDeleted).ToListAsync();
         var gamesDto = _mapper.Map<IEnumerable<Game>, IEnumerable<GameDtoGet>>(games);
         return gamesDto;
     }

@@ -18,7 +18,7 @@ import { EventTypes } from '../../event-types';
   styleUrls: ['./toast.component.css'],
 })
 export class ToastComponent implements OnInit {
-  EventType = EventTypes
+  EventType = EventTypes;
   @Output() disposeEvent = new EventEmitter();
 
   @ViewChild('toastElement', { static: true })
@@ -44,7 +44,7 @@ export class ToastComponent implements OnInit {
       this.toastEl.nativeElement,
       this.type === EventTypes.Error
         ? {
-            autohide: false,
+            delay: 10000,
           }
         : {
             delay: 5000,

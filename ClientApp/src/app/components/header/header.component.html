@@ -1,4 +1,10 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
+<nav
+  *ngIf="{
+    role: (authService.role$ | async),
+    isLoggedIn: (authService.isLoggedIn$ | async)
+  } as user"
+  class="navbar navbar-expand-sm navbar-light bg-light"
+>
   <div class="container-fluid">
     <a class="navbar-brand" href="#">ModHub</a>
     <button
@@ -17,7 +23,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a
-            *ngIf="!(authService.isLoggedIn$ | async)"
+            *ngIf="!user.isLoggedIn"
             class="nav-link active"
             aria-current="page"
             href=""
@@ -25,7 +31,7 @@
             >Login</a
           >
           <a
-            *ngIf="authService.isLoggedIn$ | async"
+            *ngIf="user.isLoggedIn"
             class="nav-link active"
             aria-current="page"
             href=""
@@ -35,6 +41,7 @@
         </li>
         <li class="nav-item">
           <a
+            *ngIf="user.role === Role.User"
             class="nav-link active"
             aria-current="page"
             href=""
@@ -44,7 +51,7 @@
         </li>
         <li class="nav-item">
           <a
-            *ngIf="(authService.role$ | async) === Role.User"
+            *ngIf="user.role === Role.User"
             class="nav-link active"
             aria-current="page"
             href=""
@@ -54,12 +61,33 @@
         </li>
         <li class="nav-item">
           <a
-            *ngIf="(authService.role$ | async) === Role.Moderator"
+            *ngIf="user.role === Role.Moderator || user.role === Role.Admin"
             class="nav-link active"
             aria-current="page"
             href=""
             (click)="onModSubmissionsClick()"
-          >Mod submissions</a
+            >Mod submissions</a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a
+            *ngIf="user.role === Role.Admin"
+            class="nav-link active"
+            aria-current="page"
+            href=""
+            (click)="onManageGamesClick()"
+            >Games</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="user.role === Role.Admin"
+            class="nav-link active"
+            aria-current="page"
+            href=""
+            (click)="onManageUsersClick()"
+            >Users</a
           >
         </li>
       </ul>

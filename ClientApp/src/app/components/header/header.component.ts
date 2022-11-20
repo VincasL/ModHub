@@ -10,9 +10,6 @@ import { Role } from 'src/app/services/rest/models';
 })
 export class HeaderComponent implements OnInit {
   constructor(readonly authService: AuthService, private readonly router: Router) {}
-
-  isLoggedIn$ = this.authService.isLoggedIn$;
-  role$ = this.authService.isLoggedIn$;
   Role = Role;
 
   ngOnInit(): void {}
@@ -40,6 +37,16 @@ export class HeaderComponent implements OnInit {
 
   onModSubmissionsClick() {
     this.router.navigate(['submissions']);
+    return false;
+  }
+
+  onManageGamesClick() {
+    this.router.navigate(['games']);
+    return false;
+  }
+
+  onManageUsersClick() {
+    this.router.navigate(['users']);
     return false;
   }
 }

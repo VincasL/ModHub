@@ -37,6 +37,9 @@ import { CommentsComponent } from './components/mod/components/comments/comments
 import { CommentTextComponent } from './components/mod/components/comments/comment-text/comment-text.component';
 import { RegisterComponent } from './components/register/register.component';
 import {HttpErrorInterceptor} from "./shared/interceptors/http-error.interceptor";
+import { GamesComponent } from './components/games/games.component';
+import { UsersComponent } from './components/users/users.component';
+import { GameAddEditComponent } from './components/games/components/game-add-edit/game-add-edit.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +66,10 @@ import {HttpErrorInterceptor} from "./shared/interceptors/http-error.interceptor
     StarRatingComponent,
     CommentsComponent,
     CommentTextComponent,
-    RegisterComponent
+    RegisterComponent,
+    GamesComponent,
+    UsersComponent,
+    GameAddEditComponent
   ],
   imports: [
     BrowserModule,

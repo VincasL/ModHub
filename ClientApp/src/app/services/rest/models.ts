@@ -5,6 +5,9 @@ export interface Game {
   name: string;
   description: string;
   imageUrl: string;
+  modsCount: number;
+  totalDownloads: number;
+  waitingForApprovalModsCount: number;
 }
 
 export enum Role {
@@ -56,6 +59,4 @@ export interface LoginDto {
   refreshToken: string;
 }
 
-export interface RegisterDto {
-
-}
+export interface RegisterDto {}

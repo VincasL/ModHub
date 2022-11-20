@@ -1,0 +1,83 @@
+<div class="login-form d-flex w-100 mx-auto mt-1">
+  <form class="w-100" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div *ngIf="this.form.get('name') as control" class="form-outline mb-4">
+      <label class="form-label" for="name">Name</label>
+
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        formControlName="name"
+      />
+
+      <div
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+        class="alert-danger"
+      >
+        <div *ngIf="control.errors?.['required']" class="text-danger">
+          Name is required.
+        </div>
+        <div *ngIf="control.errors?.['minlength']" class="text-danger">
+          Name should be at least 6 characters
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="this.form.get('imageUrl') as control" class="form-outline mb-4">
+      <label class="form-label" for="imageUrl">Image Url</label>
+
+      <input
+        type="text"
+        id="imageUrl"
+        class="form-control"
+        formControlName="imageUrl"
+      />
+
+      <div
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+        class="alert-danger"
+      >
+        <div *ngIf="control.errors?.['required']" class="text-danger">
+          Image url is required.
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="this.form.get('description') as control"
+      class="form-outline mb-4"
+    >
+      <div class="form-group-lg">
+        <label for="description">Description</label>
+        <textarea
+          class="form-control"
+          formControlName="description"
+          id="description"
+          rows="6"
+        ></textarea>
+      </div>
+
+      <div
+        *ngIf="control.invalid && (control.dirty || control.touched)"
+        class="alert-danger"
+      >
+        <div *ngIf="control.errors?.['required']" class="text-danger">
+          Description is required.
+        </div>
+        <div *ngIf="control.errors?.['minlength'] as error" class="text-danger">
+          Description should be at least {{error?.['requiredLength']}} characters
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit button -->
+    <div class="w-100 text-center d-flex justify-content-center pt-2">
+      <button
+        type="submit"
+        class="btn btn-primary btn-block mb-4 d-flex px-3 align-items-center"
+      >
+        <i class="material-icons send-icon pe-1">send</i> Submit
+      </button>
+    </div>
+  </form>
+</div>

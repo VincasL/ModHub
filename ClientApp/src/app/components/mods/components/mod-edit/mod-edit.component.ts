@@ -40,7 +40,7 @@ export class ModEditComponent implements OnInit {
     })
   );
 
-  mod$: Observable<Game> = this.routeParams$.pipe(
+  mod$: Observable<Mod> = this.routeParams$.pipe(
     switchMap((params) =>
       this.modsRestService.getMod(params.gameId, params.modId)
     ),

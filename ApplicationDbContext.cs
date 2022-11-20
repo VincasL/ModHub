@@ -42,15 +42,22 @@ public class ApplicationDbContext : DbContext
         
         modelBuilder.Entity<Mod>(entity =>
         {
-            entity.HasMany(x => x.Comments)
+            entity
+                .HasOne(x => x.Game)
+                .WithMany(x => x.Mods);
+            
+            entity
+                .HasMany(x => x.Comments)
                 .WithOne(x => x.Mod)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            entity.HasMany(x => x.ModRatings)
+            entity
+                .HasMany(x => x.ModRatings)
                 .WithOne(x => x.Mod)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            entity.HasOne(x => x.CreatedBy)
+            entity
+                .HasOne(x => x.CreatedBy)
                 .WithMany(x => x.Mods);
         });
         
@@ -59,7 +66,5 @@ public class ApplicationDbContext : DbContext
             entity.HasOne(x => x.CreatedBy)
                 .WithMany(x => x.Comments);
         });
-        
-        
     }
 }
