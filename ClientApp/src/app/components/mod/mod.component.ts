@@ -56,5 +56,37 @@ export class ModComponent implements OnInit {
       .subscribe();
   }
 
-  onDownloadClick() {}
+  onDownloadClick() {
+    this.mod$
+      .pipe(
+        first(),
+        tap((mod) => this.saveData({ mod }, `${mod.name}.json`))
+      )
+      .subscribe();
+
+    this.routeParams$
+      .pipe(
+        first(),
+        switchMap((params) =>
+          this.modsRestService.downloadMod(params.gameId, params.modId)
+        ),
+        tap(() => this.refreshModSubject.next())
+      )
+      .subscribe();
+  }
+
+  saveData(data: any, fileName: any) {
+    let a = document.createElement('a');
+    document.body.appendChild(a);
+    // @ts-ignore
+    a['style'] = 'display: none';
+
+    var json = JSON.stringify(data),
+      blob = new Blob([json], { type: 'octet/stream' }),
+      url = window.URL.createObjectURL(blob);
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
 }

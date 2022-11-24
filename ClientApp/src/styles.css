@@ -6,7 +6,7 @@ body {
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: "Muli", serif;
 }
 h1 {
   font-size: 32px;
@@ -32,4 +32,32 @@ h2 {
 .cancel,
 .delete {
   color: red;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
+#page-container {
+  position: relative;
+  min-height: 100%;
+}
+
+#content-wrap {
+  padding-bottom: 20rem; /* Footer height */
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  max-height: 20rem; /* Footer height */
+  background-color: #3e4551;
+
+}
+
+#header{
+  background-color: #3e4551;
+  color: white;
 }

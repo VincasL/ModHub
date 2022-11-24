@@ -65,9 +65,9 @@ export class ModsComponent implements OnInit {
   }
 
   openModal(mod: Mod) {
-    const title = `Are you sure you want to delete ${mod.name}?`;
+    const text = `Are you sure you want to delete ${mod.name}?`;
     this.modalRef = this.modalService.open(ConfirmModalComponent, {
-      data: { title },
+      data: { text },
     });
 
     this.modalRef.onClose

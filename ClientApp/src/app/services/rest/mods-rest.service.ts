@@ -61,4 +61,11 @@ export class ModsRestService {
       `${this.baseUrl}/${mod.gameId}/mods/${mod.id}`
     );
   }
+
+  downloadMod(gameId: number, modId: number) {
+    return this.httpClient.post<Mod>(
+      `${this.baseUrl}/${gameId}/mods/${modId}/download`,
+      {}
+    );
+  }
 }

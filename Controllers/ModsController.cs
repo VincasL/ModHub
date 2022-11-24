@@ -29,7 +29,7 @@ public class ModsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<ModDtoGet>))]
     public async Task<ActionResult> GetAllMods(int gameId)
     {
-        int? userId = User == null? null : int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        int? userId = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var id) ? id : null;
   
         if (!_gamesHandler.GameExists(gameId))
         {
@@ -61,19 +61,19 @@ public class ModsController : ControllerBase
     }
 
     
-    [HttpGet("{id}")]
+    [HttpGet("{modId}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModDtoGet))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ModDtoGet>> GetMod(int id, int gameId)
+    public async Task<ActionResult<ModDtoGet>> GetMod(int modId, int gameId)
     {
-        int? userId = User == null? null : int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        int? userId = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var id) ? id : null;
 
-        if (!_modsHandler.ModExists(id, gameId))
+        if (!_modsHandler.ModExists(modId, gameId))
         {
             return NotFound();
         }
 
-        var result = await _modsHandler.GetMod(id, userId);
+        var result = await _modsHandler.GetMod(modId, userId);
 
         return result;
     }
@@ -135,6 +135,21 @@ public class ModsController : ControllerBase
         }
         
         var result = await _modsHandler.ChangeModStatus(modId, modChangeStatusDto);
+        return Ok(result);
+    }
+    
+    [HttpPost("{modId}/download")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ModDtoGet))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DownloadMod(int modId, int gameId)
+    {
+        if (!_modsHandler.ModExists(modId, gameId))
+        {
+            return NotFound();
+        }
+        
+        var result = await _modsHandler.DownloadMod(modId);
         return Ok(result);
     }
     

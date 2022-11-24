@@ -40,7 +40,7 @@ public class CommentsController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CommentDtoGet>))]
     public async Task<ActionResult<CommentDtoGet>> GetAllComments(int gameId, int modId)
     {
-        int? userId = User == null? null : int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        int? userId = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var id) ? id : null;
         
         if(!_modsHandler.ModExists(modId, gameId))
         {

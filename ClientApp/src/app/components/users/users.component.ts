@@ -73,9 +73,9 @@ export class UsersComponent implements OnInit {
   }
 
   openModal(user: User) {
-    const title = `Are you sure you want to delete ${user.username}?`;
+    const text = `Are you sure you want to delete ${user.username}?`;
     this.modalRef = this.modalService.open(ConfirmModalComponent, {
-      data: { title },
+      data: { text },
     });
 
     this.modalRef.onClose

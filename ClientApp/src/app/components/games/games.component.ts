@@ -54,9 +54,9 @@ export class GamesComponent implements OnInit {
   }
 
   openModal(game: Game) {
-    const title = `Are you sure you want to delete ${game.name}?`;
+    const text = `Are you sure you want to delete ${game.name}?`;
     this.modalRef = this.modalService.open(ConfirmModalComponent, {
-      data: { title },
+      data: { text },
     });
 
     this.modalRef.onClose

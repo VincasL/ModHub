@@ -207,4 +207,17 @@ public class ModsHandler
 
         await _context.SaveChangesAsync();
     }
+
+    public async Task<ModDtoGet> DownloadMod(int modId)
+    {
+        var mod = await _context.Mods.FirstAsync( x=> x.Id == modId);
+        _context.Entry(mod).State = EntityState.Modified;
+
+        mod.TotalDownloads++;
+
+        await _context.SaveChangesAsync();
+        
+        var modToReturn = _mapper.Map<Mod, ModDtoGet>(mod);
+        return modToReturn;
+    }
 }

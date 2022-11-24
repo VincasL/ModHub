@@ -1,107 +1,109 @@
-<nav
-  *ngIf="{
-    role: (authService.role$ | async),
-    isLoggedIn: (authService.isLoggedIn$ | async)
-  } as user"
-  class="navbar navbar-expand-md navbar-light bg-light"
->
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">ModHub</a>
-    <button
-      (click)="collapse.toggle()"
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <ngx-navbar-collapse #collapse="ngxNavbarCollapse">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a
-            *ngIf="!user.isLoggedIn"
-            class="nav-link active"
-            aria-current="page"
-            href=""
-            (click)="onLoginClick()"
-            >Login</a
-          >
-          <a
-            *ngIf="user.isLoggedIn"
-            class="nav-link active"
-            aria-current="page"
-            href=""
-            (click)="onLogoutClick()"
-            >Logout</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            *ngIf="user.role === Role.User"
-            class="nav-link active"
-            aria-current="page"
-            href=""
-            (click)="onUploadModClick()"
-            >Upload mod</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            *ngIf="user.role === Role.User"
-            class="nav-link active"
-            aria-current="page"
-            href=""
-            (click)="onMyUploadsClick()"
-            >My uploads</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            *ngIf="user.role === Role.Moderator || user.role === Role.Admin"
-            class="nav-link active"
-            aria-current="page"
-            href=""
-            (click)="onModSubmissionsClick()"
-            >Mod submissions</a
-          >
-        </li>
+<header class="fixed-top" id="header">
+  <nav
+    *ngIf="{
+      role: (authService.role$ | async),
+      isLoggedIn: (authService.isLoggedIn$ | async)
+    } as user"
+    class="navbar navbar-expand-md"
+  >
+    <div class="container-fluid">
+      <a class="navbar-brand text-white font-monospace" href="#">ModHub</a>
+      <button
+        (click)="collapse.toggle()"
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <ngx-navbar-collapse #collapse="ngxNavbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a
+              *ngIf="!user.isLoggedIn"
+              class="nav-link active text-white"
+              aria-current="page"
+              href=""
+              (click)="onLoginClick()"
+              >Login</a
+            >
+            <a
+              *ngIf="user.isLoggedIn"
+              class="nav-link active text-white"
+              aria-current="page"
+              href=""
+              (click)="onLogoutClick()"
+              >Logout</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              *ngIf="user.role === Role.User"
+              class="nav-link active text-white"
+              aria-current="page"
+              href=""
+              (click)="onUploadModClick()"
+              >Upload mod</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              *ngIf="user.role === Role.User"
+              class="nav-link active text-white"
+              aria-current="page"
+              href=""
+              (click)="onMyUploadsClick()"
+              >My uploads</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              *ngIf="user.role === Role.Moderator || user.role === Role.Admin"
+              class="nav-link active text-white"
+              aria-current="page"
+              href=""
+              (click)="onModSubmissionsClick()"
+              >Mod submissions</a
+            >
+          </li>
 
-        <li class="nav-item">
-          <a
-            *ngIf="user.role === Role.Admin"
-            class="nav-link active"
-            aria-current="page"
-            href=""
-            (click)="onManageGamesClick()"
-            >Games</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            *ngIf="user.role === Role.Admin"
-            class="nav-link active"
-            aria-current="page"
-            href=""
-            (click)="onManageUsersClick()"
-            >Users</a
-          >
-        </li>
+          <li class="nav-item">
+            <a
+              *ngIf="user.role === Role.Admin"
+              class="nav-link active text-white"
+              aria-current="page"
+              href=""
+              (click)="onManageGamesClick()"
+              >Games</a
+            >
+          </li>
+          <li class="nav-item text-white">
+            <a
+              *ngIf="user.role === Role.Admin"
+              class="nav-link active"
+              aria-current="page"
+              href=""
+              (click)="onManageUsersClick()"
+              >Users</a
+            >
+          </li>
 
-        <li class="nav-item">
-          <a
-            *ngIf="user.isLoggedIn"
-            class="nav-link active"
-            aria-current="page"
-            href=""
-            (click)="onMyProfileClick()"
-            >My Profile</a
-          >
-        </li>
-      </ul>
-    </ngx-navbar-collapse>
-  </div>
-</nav>
+          <li class="nav-item text-white">
+            <a
+              *ngIf="user.isLoggedIn"
+              class="nav-link active"
+              aria-current="page"
+              href=""
+              (click)="onMyProfileClick()"
+              >My Profile</a
+            >
+          </li>
+        </ul>
+      </ngx-navbar-collapse>
+    </div>
+  </nav>
+</header>
