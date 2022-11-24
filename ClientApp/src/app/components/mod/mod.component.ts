@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   BehaviorSubject,
-  combineLatest,
+  combineLatest, filter,
   first,
   map,
   Observable,
@@ -11,6 +11,7 @@ import {
 import { Mod } from '../../services/rest/models';
 import { ActivatedRoute } from '@angular/router';
 import { ModsRestService } from '../../services/rest/mods-rest.service';
+import {RatingsService} from "../../services/shared/ratings.service";
 
 @Component({
   selector: 'app-mod',
@@ -20,7 +21,8 @@ import { ModsRestService } from '../../services/rest/mods-rest.service';
 export class ModComponent implements OnInit {
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly modsRestService: ModsRestService
+    private readonly modsRestService: ModsRestService,
+    private readonly ratingsService: RatingsService
   ) {}
 
   private refreshModSubject = new BehaviorSubject<void>(undefined);
@@ -50,7 +52,8 @@ export class ModComponent implements OnInit {
     this.mod$
       .pipe(
         first(),
-        switchMap((mod) => this.modsRestService.putModRating(mod.id, rating)),
+        switchMap((mod) => this.ratingsService.onModRatingChange(mod.id, rating)),
+        filter(Boolean),
         tap(() => this.refreshModSubject.next())
       )
       .subscribe();

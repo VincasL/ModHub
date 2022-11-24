@@ -26,7 +26,7 @@ public class UsersHandler
     
     public async Task<UserDtoGet> GetUser(int id)
     {
-        var user = await _context.Users.FirstAsync(x => x.Id == id);
+        var user = await _context.Users.Include(x => x.Mods).FirstAsync(x => x.Id == id);
         var userDto = _mapper.Map<User, UserDtoGet>(user);
         return userDto;
     }

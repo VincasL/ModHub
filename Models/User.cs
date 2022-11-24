@@ -19,6 +19,6 @@ public class User : BaseModel
     public string? ImageUrl { get; set; } =
         "https://staticc.sportskeeda.com/editor/2020/11/b6b38-16042204231804-800.jpg";
 
-    [NotMapped] public int UploadedModsCount => Mods.Count;
+    [NotMapped] public int UploadedModsCount => Mods.Count(x => x.ModStatus == ModStatus.Approved);
 
 }

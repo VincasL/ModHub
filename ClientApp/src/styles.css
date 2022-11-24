@@ -61,3 +61,7 @@ body {
   background-color: #3e4551;
   color: white;
 }
+
+body.modal-open{
+  padding-right: 0 !important;
+}

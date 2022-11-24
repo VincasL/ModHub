@@ -81,10 +81,10 @@
               >Games</a
             >
           </li>
-          <li class="nav-item text-white">
+          <li class="nav-item ">
             <a
               *ngIf="user.role === Role.Admin"
-              class="nav-link active"
+              class="nav-link active text-white"
               aria-current="page"
               href=""
               (click)="onManageUsersClick()"
@@ -92,10 +92,10 @@
             >
           </li>
 
-          <li class="nav-item text-white">
+          <li class="nav-item">
             <a
               *ngIf="user.isLoggedIn"
-              class="nav-link active"
+              class="nav-link active text-white"
               aria-current="page"
               href=""
               (click)="onMyProfileClick()"

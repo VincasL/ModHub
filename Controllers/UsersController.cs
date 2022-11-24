@@ -8,7 +8,6 @@ using ModHub.Handlers;
 
 namespace ModHub.Controllers;
 
-[Authorize(Roles = "Admin")]
 [ApiController]
 [Route("[controller]")]
 public class UsersController : ControllerBase

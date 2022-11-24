@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {
   BehaviorSubject,
   combineLatest,
-  filter, first,
+  filter,
+  first,
   iif,
   map,
   mapTo,
@@ -16,6 +17,7 @@ import { ModsRestService } from '../../../../../../services/rest/mods-rest.servi
 import { AuthService } from '../../../../../../services/shared/auth.service';
 import { ConfirmModalComponent } from '../../../../../confirm-modal/confirm-modal.component';
 import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
+import { RatingsService } from '../../../../../../services/shared/ratings.service';
 
 @Component({
   selector: 'app-mod-list',
@@ -23,14 +25,11 @@ import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
   styleUrls: ['./mod-list.component.css'],
 })
 export class ModListComponent implements OnInit {
-  modalRef: MdbModalRef<ConfirmModalComponent> | null = null;
-
   constructor(
     private readonly route: ActivatedRoute,
     private readonly modsRestService: ModsRestService,
     private readonly router: Router,
-    private readonly authService: AuthService,
-    private modalService: MdbModalService
+    private readonly ratingsService: RatingsService
   ) {}
 
   private refreshModsSubject = new BehaviorSubject<void>(undefined);
@@ -51,34 +50,8 @@ export class ModListComponent implements OnInit {
   }
 
   onModRatingChange(event: { modId: number; rating: number }) {
-    const putModRating$ = this.modsRestService
-      .putModRating(event.modId, event.rating)
-      .pipe(tap(() => this.refreshModsSubject.next()));
-
-    this.authService.isLoggedIn$
-      .pipe(
-        first(),
-        switchMap((isLoggedIn) =>
-          iif(() => isLoggedIn, putModRating$, this.openLoginPromptModal())
-        )
-      )
+    this.ratingsService
+      .onModRatingChange(event.modId, event.rating)
       .subscribe();
-  }
-
-  openLoginPromptModal(): Observable<void> {
-    const title = `You have to be logged in to rate mods`;
-    const text = 'Register or login to rate this mod'
-    const saveButtonText = 'Login';
-
-    this.modalRef = this.modalService.open(ConfirmModalComponent, {
-      data: { title, saveButtonText, text },
-    });
-
-    return this.modalRef.onClose.pipe(
-      map((result) => result.success),
-      filter(Boolean),
-      switchMap(() => this.router.navigate(['login'])),
-      map(() => void 0)
-    );
   }
 }
