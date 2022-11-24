@@ -73,6 +73,29 @@
     </div>
 
     <div
+      class="custom-dropzone mb-4"
+      ngx-dropzone
+      [accept]="'image/*'"
+      (change)="onSelect($event)"
+      [multiple]="false"
+    >
+      <ngx-dropzone-label>
+        <div>
+          <h2>Drag and drop or click to select files</h2>
+        </div>
+      </ngx-dropzone-label>
+      <ngx-dropzone-image-preview
+        ngProjectAs="ngx-dropzone-preview"
+        *ngFor="let f of files"
+        [file]="f"
+        [removable]="true"
+        (removed)="onRemove(f)"
+      >
+        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+      </ngx-dropzone-image-preview>
+    </div>
+
+    <div
       *ngIf="this.form.get('description') as control"
       class="form-outline mb-4"
     >

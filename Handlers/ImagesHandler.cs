@@ -17,23 +17,29 @@ namespace ModHub.Handlers
                 return imageString;
             }
 
-            const string imgurUrl = "https://api.imgur.com/3/image";
-            const string clientId = "2de0f9a764a6355";
+            var imgurUrl = "https://api.imgur.com/3/image";
+            var clientId = "2de0f9a764a6355";
 
             var client = new RestClient();
-            var request = new RestRequest(method: Method.Post, resource: imgurUrl);
+            var request = new RestRequest(method: Method.Get, resource: imgurUrl);
             request.AddHeader("Authorization", "Client-ID " + clientId);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddParameter("image", imageString);
             try
             {
-                var response = await client.ExecuteAsync(request);
+                var response = client.PostAsync(request).Result;
                 dynamic responseJson = JObject.Parse(response.Content);
-                string? imageUrl = responseJson.data.link;
-                return string.IsNullOrEmpty(imageUrl) ? string.Empty : imageUrl;
+                string imageUrl = responseJson.data.link;
+                if (string.IsNullOrEmpty(imageUrl))
+                {
+                    return string.Empty;
+                }
+
+                return imageUrl;
             }
-            catch
+            catch(Exception e)
             {
+                Console.WriteLine(e);
                 return string.Empty;
             }
         }

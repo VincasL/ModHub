@@ -57,4 +57,7 @@ export interface LoginDto {
   refreshToken: string;
 }
 
-export interface RegisterDto {}
+
+export interface ImageGetDto {
+  imageUrl: string | null;
+}

@@ -92,7 +92,7 @@ public class ModsController : ControllerBase
         }
 
         var result = await _modsHandler.AddMod(modDto, gameId, userId);
-        return CreatedAtAction(nameof(GetMod), new { id = result.Id, gameId }, result);
+        return CreatedAtAction(nameof(GetMod), new { modId = result.Id, gameId }, result);
     }
 
     [Authorize(Roles = "User,Moderator,Admin")]

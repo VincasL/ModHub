@@ -5,6 +5,9 @@ using ModHub.Handlers;
 
 namespace ModHub.Controllers;
 
+[ApiController]
+[Route("[controller]")]
+
 public class ImagesController : ControllerBase
 {
     private readonly ImagesHandler _imagesHandler;
@@ -18,9 +21,9 @@ public class ImagesController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<string>> PostImage([FromBody] string imageBase64)
+    public async Task<ActionResult> PostImage([FromBody] PostImageDto postImageDto)
     {
-        var result = await _imagesHandler.PostImage(imageBase64);
-        return Ok(result);
+        var result = await _imagesHandler.PostImage(postImageDto.imageBase64);
+        return Ok(new ImageGetDto(){ImageUrl = result});
     }
 }

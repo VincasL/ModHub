@@ -14,6 +14,8 @@ import {
 } from 'rxjs';
 import { Game } from '../../../../services/rest/models';
 import { GamesRestService } from '../../../../services/rest/games-rest.service';
+import {NgxDropzoneChangeEvent} from "ngx-dropzone";
+import {ImagesRestService} from "../../../../services/rest/images-rest.service";
 
 @Component({
   selector: 'app-game-add-edit',
@@ -44,7 +46,8 @@ export class GameAddEditComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private location: Location,
-    private readonly toastService: ToastService
+    private readonly toastService: ToastService,
+    private readonly imagesRestService: ImagesRestService
   ) {}
 
   gameId$ = this.route.params.pipe(
@@ -88,5 +91,36 @@ export class GameAddEditComponent implements OnInit {
         tap(() => this.location.back())
       )
       .subscribe();
+  }
+
+  files: File[] = [];
+
+  onSelect(event: NgxDropzoneChangeEvent) {
+    const file = event.addedFiles[0];
+    this.files.push(file);
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      const imageBase64 = fileReader.result?.toString().split(',')[1];
+
+      if (!imageBase64) {
+        return;
+      }
+
+      this.imagesRestService
+        .postImage(imageBase64)
+        .pipe(
+          first(),
+          tap((imageGetDto) =>
+            this.form.get('imageUrl')?.setValue(imageGetDto.imageUrl)
+          )
+        )
+        .subscribe();
+    };
+    fileReader.readAsDataURL(file);
+  }
+
+  onRemove(event: File) {
+    this.form.get('imageUrl')?.reset();
+    this.files.splice(this.files.indexOf(event), 1);
   }
 }

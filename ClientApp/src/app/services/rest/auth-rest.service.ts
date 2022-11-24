@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LoginDto, RegisterDto } from './models';
+import { LoginDto } from './models';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

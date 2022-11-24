@@ -6,6 +6,8 @@ import { Game, Mod } from '../../../../services/rest/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ToastService } from '../../../../modules/toaster/services/toast.service';
+import {NgxDropzoneChangeEvent} from "ngx-dropzone";
+import {ImagesRestService} from "../../../../services/rest/images-rest.service";
 
 @Component({
   selector: 'app-mod-edit',
@@ -28,7 +30,8 @@ export class ModEditComponent implements OnInit {
     private readonly route: ActivatedRoute,
     private readonly router: Router,
     private location: Location,
-    private readonly toastService: ToastService
+    private readonly toastService: ToastService,
+    private readonly imagesRestService: ImagesRestService
   ) {}
 
   routeParams$ = this.route.params.pipe(
@@ -71,5 +74,38 @@ export class ModEditComponent implements OnInit {
         tap(() => this.location.back())
       )
       .subscribe();
+  }
+
+  files: File[] = [];
+
+  onSelect(event: NgxDropzoneChangeEvent) {
+    const file = event.addedFiles[0];
+    this.files.push(file);
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+
+      const imageBase64 = fileReader.result?.toString().split(',')[1];
+
+      if (!imageBase64) {
+        return;
+      }
+
+      this.imagesRestService
+        .postImage(imageBase64)
+        .pipe(
+          first(),
+          tap((imageGetDto) =>
+            this.editModForm.get('imageUrl')?.setValue(imageGetDto.imageUrl)
+          )
+        )
+        .subscribe();
+    };
+    fileReader.readAsDataURL(file);
+
+  }
+
+  onRemove(event: File) {
+    this.editModForm.get('imageUrl')?.reset();
+    this.files.splice(this.files.indexOf(event), 1);
   }
 }

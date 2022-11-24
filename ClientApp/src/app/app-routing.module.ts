@@ -28,7 +28,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'upload', component: UploadModComponent },
   { path: 'mods', component: ModsComponent },
-  { path: 'game/:gameId/mod/:modId/edit', component: ModEditComponent },
+  { path: 'game/:gameId/mod/:modId/edit', component: UploadModComponent },
   { path: 'submissions', component: ModSubmissionsComponent },
   { path: 'users', component: UsersComponent },
   { path: 'user/:userId', component: UserComponent },

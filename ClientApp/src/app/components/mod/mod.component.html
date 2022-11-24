@@ -25,7 +25,10 @@
       </p>
     </div>
 
-    <div class="col-4 col-sm-6 d-flex flex-column align-items-center">
+    <div
+      class="col-4 col-sm-6 d-flex flex-column align-items-center"
+      *ngIf="(mod$ | async)?.modStatus == ModStatus.Approved"
+    >
       <div>
         <app-star-rating
           [mod]="mod"
@@ -49,16 +52,15 @@
 
   <div class="d-flex text-center justify-content-center">
     <button
+      *ngIf="(mod$ | async)?.modStatus == ModStatus.Approved"
       class="d-flex btn btn-primary btn-block mt-3 p-2 p-md-3"
       (click)="onDownloadClick()"
     >
       <i class="material-icons">download</i>Download
     </button>
   </div>
-
-  <h2 class="text-center mt-5 mb-3">
-    <i class="material-icons">mode_comment</i> Comments:
-  </h2>
 </div>
 
-<app-comments></app-comments>
+<app-comments
+  *ngIf="(mod$ | async)?.modStatus == ModStatus.Approved"
+></app-comments>
