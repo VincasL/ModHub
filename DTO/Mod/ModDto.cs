@@ -1,6 +1,4 @@
-﻿using ModHub.Enums;
-
-namespace ModHub.DTO;
+﻿namespace ModHub.DTO.Mod;
 
 public class ModDto
 {

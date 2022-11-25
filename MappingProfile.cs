@@ -2,6 +2,7 @@
 using ModHub.DTO;
 using ModHub.DTO.Auth;
 using ModHub.DTO.Game;
+using ModHub.DTO.Mod;
 using ModHub.DTO.User;
 using ModHub.Models;
 

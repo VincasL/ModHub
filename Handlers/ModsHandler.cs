@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ModHub.DTO;
+using ModHub.DTO.Mod;
 using ModHub.Enums;
 using ModHub.Models;
 

@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ModHub.DTO;
+using ModHub.DTO.Mod;
 using ModHub.Handlers;
 
 namespace ModHub.Controllers;
