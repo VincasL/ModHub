@@ -13,7 +13,6 @@ export class GamesRestService {
   }
 
   getGames(): Observable<Game[]> {
-    console.log(this.baseUrl);
     return this.httpClient.get<Game[]>(this.baseUrl);
   }
 

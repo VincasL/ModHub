@@ -61,6 +61,10 @@
   </div>
 </div>
 
+<div class="spinner-border" role="status" *ngIf="isModLoading">
+</div>
+
+
 <app-comments
   *ngIf="(mod$ | async)?.modStatus == ModStatus.Approved"
 ></app-comments>

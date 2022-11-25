@@ -9,6 +9,7 @@ import { Game } from '../../../../services/rest/models';
   styleUrls: ['./game-grid.component.css'],
 })
 export class GameGrid implements OnInit {
+  isGamesLoading = false;
   games$ = this.gamesRestService.getGames();
 
   constructor(
@@ -17,7 +18,8 @@ export class GameGrid implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.games$.subscribe();
+    this.isGamesLoading = true;
+    this.games$.subscribe(() => this.isGamesLoading = false);
   }
 
   onGameClick(game: Game) {

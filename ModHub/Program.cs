@@ -68,7 +68,7 @@ builder.Services.AddTransient<AuthHandler>();
 builder.Services.AddTransient<ImagesHandler>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+    options => options.UseSqlServer("name=ConnectionStrings:Azure"));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>

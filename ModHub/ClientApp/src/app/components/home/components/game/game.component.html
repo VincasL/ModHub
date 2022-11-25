@@ -1,2 +1,5 @@
 <app-game-card *ngIf="game$ | async as game" [game]="game"></app-game-card>
+<div class="spinner-border" role="status" *ngIf="isGameLoading">
+</div>
+
 <app-mod-list></app-mod-list>

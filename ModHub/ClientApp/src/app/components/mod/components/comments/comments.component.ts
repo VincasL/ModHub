@@ -32,6 +32,8 @@ export class CommentsComponent implements OnInit {
     text: new FormControl(null, Validators.required),
   });
 
+  isCommentsLoading = true;
+
   constructor(
     private readonly route: ActivatedRoute,
     private readonly commentsRestService: CommentsRestService,
@@ -57,9 +59,12 @@ export class CommentsComponent implements OnInit {
     this.routeParams$,
     this.refreshComments$,
   ]).pipe(
+    tap(() => (this.isCommentsLoading = true)),
+
     switchMap(([params]) =>
       this.commentsRestService.getComments(params.gameId, params.modId)
-    )
+    ),
+    tap(() => (this.isCommentsLoading = false))
   );
 
   ngOnInit(): void {}

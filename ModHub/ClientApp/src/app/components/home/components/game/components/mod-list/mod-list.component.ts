@@ -2,21 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {
   BehaviorSubject,
   combineLatest,
-  filter,
-  first,
-  iif,
   map,
-  mapTo,
   Observable,
   switchMap,
   tap,
 } from 'rxjs';
-import { Game, Mod } from '../../../../../../services/rest/models';
+import { Mod } from '../../../../../../services/rest/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModsRestService } from '../../../../../../services/rest/mods-rest.service';
-import { AuthService } from '../../../../../../services/shared/auth.service';
-import { ConfirmModalComponent } from '../../../../../confirm-modal/confirm-modal.component';
-import { MdbModalRef, MdbModalService } from 'mdb-angular-ui-kit/modal';
 import { RatingsService } from '../../../../../../services/shared/ratings.service';
 
 @Component({
@@ -34,13 +27,16 @@ export class ModListComponent implements OnInit {
 
   private refreshModsSubject = new BehaviorSubject<void>(undefined);
   refreshMods$ = this.refreshModsSubject.asObservable();
+  isModsLoading = true;
 
   mods$: Observable<Mod[]> = combineLatest([
     this.route.params,
     this.refreshMods$,
   ]).pipe(
+    tap(() => (this.isModsLoading = true)),
     map(([params]) => params['gameId']),
-    switchMap((gameId) => this.modsRestService.getMods(gameId))
+    switchMap((gameId) => this.modsRestService.getMods(gameId)),
+    tap(() => (this.isModsLoading = false))
   );
 
   ngOnInit(): void {}

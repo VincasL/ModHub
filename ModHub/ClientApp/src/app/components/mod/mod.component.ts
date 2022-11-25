@@ -44,10 +44,13 @@ export class ModComponent implements OnInit {
     this.routeParams$,
     this.refreshMod$,
   ]).pipe(
+    tap(() => (this.isModLoading = true)),
     switchMap(([params]) =>
       this.modsRestService.getMod(params.gameId, params.modId)
-    )
+    ),
+    tap(() => (this.isModLoading = false))
   );
+  isModLoading = false;
 
   ngOnInit(): void {}
 
